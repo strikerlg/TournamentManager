@@ -1,54 +1,54 @@
 body {
-	font-size: 42px;
+  font-size: 42px;
 }
 
 body * {
-	line-height: 1em;
+  line-height: 1em;
 }
 
 .mf-container {
-	padding: 0 70px;
+  padding: 0 70px;
 }
 
 .mf-page-header {
-	background-color: rgb(79, 129, 189);
+  background-color: rgb(79, 129, 189);
 }
 
 .mf-menu {
-	padding: 5px 0;
+  padding: 5px 0;
 }
 
 .mf-menu * {
-	display: inline-block;
+  display: inline-block;
 }
 
 .mf-menu h1 {
-	margin: 0;
-	font-size: 24px;
+  margin: 0;
+  font-size: 24px;
 }
 
 .mf-menu img {
-	display: inline;
-	height: 45px;
-	width: auto;
+  display: inline;
+  height: 45px;
+  width: auto;
 }
 
 .mf-section-separator {
-	text-align: center;
-	line-height: 1.5em;
+  text-align: center;
+  line-height: 1.5em;
 }
 
 .mf-section {
-	background-color: rgb(76, 85, 92);
+  background-color: rgb(76, 85, 92);
 }
 
 .mf-section-headline {
-	background-color: rgb(79, 129, 189);
-	line-height: 1.5em;
-	font-size: 75%;
+  background-color: rgb(79, 129, 189);
+  line-height: 1.5em;
+  font-size: 75%;
 }
 
 .mf-section-headline img {
-	height: 30px;
-	width: auto;
+  height: 30px;
+  width: auto;
 }
