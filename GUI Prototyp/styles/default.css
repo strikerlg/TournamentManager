@@ -64,7 +64,7 @@ body * {
   width: 200px;
   height: 100vh;
   background-color: rgb(79, 129, 189);
-  transition: 0.5s;
+  transition: left 0.5s;
   pointer-events: none;
 }
 
