@@ -15,15 +15,11 @@ body * {
 }
 
 .mf-container {
-  margin: 0 70px;
+  margin: 0;
 }
 
 .mf-page-header {
   background-color: rgb(79, 129, 189);
-}
-
-.mf-page {
-  
 }
 
 .mf-menu {
@@ -64,8 +60,8 @@ body * {
 .mf-mobile-nav {
   position: absolute;
   top: 0;
-  left: -270px;
-  width: 270px;
+  left: -200px;
+  width: 200px;
   height: 100vh;
   background-color: rgb(79, 129, 189);
   transition: 0.5s;
@@ -107,7 +103,12 @@ body * {
 }
 
 @media (min-width: 768px) {
-  .mf-menu .mf-hamburger {
-    /*display: none;*/
+  .mf-container {
+    margin: 0 70px;
+  }
+
+  .mf-mobile-nav {
+    left: -270px;
+    width: 270px;
   }
 }
