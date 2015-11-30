@@ -62,7 +62,7 @@ body * {
   top: 0;
   left: -200px;
   width: 200px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgb(79, 129, 189);
   transition: left 0.5s;
   pointer-events: none;
