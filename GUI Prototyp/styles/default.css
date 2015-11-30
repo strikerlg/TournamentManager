@@ -20,21 +20,37 @@ body * {
 
 .mf-menu {
   padding: 5px 0;
+  font-size: 24px;
 }
 
 .mf-menu * {
   display: inline-block;
+  font-size: 24px;
 }
 
 .mf-menu h1 {
   margin: 0;
-  font-size: 24px;
+}
+
+.mf-menu a {
+  color: #000;
+  text-decoration: none;
 }
 
 .mf-menu img {
   display: inline;
   height: 45px;
   width: auto;
+}
+
+.mf-main-menu {
+  font-size: 24px;
+  float: left;
+  margin-left: 20px;
+}
+
+.mf-main-menu .mf-menu-item {
+  padding: 10px 0;
 }
 
 .mf-section-separator {
