@@ -1,0 +1,5 @@
+*.iml
+.idea
+/nbproject/private/
+project.properties
+project.xml

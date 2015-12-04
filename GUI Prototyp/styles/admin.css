@@ -1,0 +1,12 @@
+.mf-page td, th {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.mf-t1-header {
+  background-color: tomato;
+}
+
+.mf-t2-header {
+  background-color: green;
+}

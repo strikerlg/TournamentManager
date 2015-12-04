@@ -1,0 +1,122 @@
+body {
+  font-size: 42px;
+}
+
+body * {
+  line-height: 1em;
+}
+
+a {
+  color: #333;
+}
+
+.mf-page-wrap {
+  transition: transform 0.5s
+}
+
+.mf-page-toright {
+  transform: translateX(200px);
+}
+
+.mf-container {
+  margin: 0;
+}
+
+.mf-page-header {
+  background-color: rgb(79, 129, 189);
+}
+
+.mf-menu {
+  padding: 5px 0;
+  font-size: 24px;
+}
+
+.mf-menu * {
+  display: inline-block;
+  font-size: 24px;
+}
+
+.mf-menu h1 {
+  margin: 0;
+}
+
+.mf-menu a {
+  color: #333;
+  text-decoration: none;
+}
+
+.mf-menu img {
+  display: inline;
+  height: 45px;
+  width: auto;
+}
+
+.mf-main-menu {
+  font-size: 24px;
+  float: left;
+  margin-left: 20px;
+}
+
+.mf-main-menu .mf-menu-item {
+  padding: 10px 0;
+}
+
+.mf-mobile-nav {
+  position: absolute;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  min-height: 100vh;
+  background-color: rgb(79, 129, 189);
+  transition: left 0.5s;
+  font-size: 24px;
+}
+
+.mf-mobile-nav-inner {
+  padding: 40px 20px;
+}
+
+.mf-mobile-nav.mf-active {
+  left: 0;
+}
+
+.mf-mobile-nav .mf-nav-item {
+  padding: 10px 0;
+}
+
+.mf-section-separator {
+  text-align: center;
+  line-height: 1.5em;
+}
+
+.mf-section {
+  background-color: rgb(76, 85, 92);
+}
+
+.mf-section-headline {
+  background-color: rgb(79, 129, 189);
+  line-height: 1.5em;
+  font-size: 75%;
+}
+
+.mf-section-headline img {
+  height: 30px;
+  width: auto;
+}
+
+.mf-section-inner {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .mf-container {
+    margin: 0 70px;
+  }
+
+  .mf-mobile-nav {
+    left: -270px;
+    width: 270px;
+  }
+}
