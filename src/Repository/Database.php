@@ -115,3 +115,15 @@ class Database
     return $rows;
   }
 }
+
+function pair($a, $b)
+{ return array($a, $b); }
+
+function sqlArg($value, $type)
+{ return pair($value, $type); }
+
+function sqlInt($value)
+{ return sqlArg($value, "i"); }
+
+function sqlString($value)
+{ return sqlArg($value, "s"); }
