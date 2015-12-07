@@ -5,7 +5,7 @@ class Database
   // Constants
   const DATABASE_IP = "localhost";
   const DATABASE_USERNAME = "root";
-  const DATABASE_PASSWORD = "";
+  const DATABASE_PASSWORD = "megaforge";
   const DATABASE_DB = "mydb";
 
   // Members
