@@ -15,11 +15,8 @@ class DatabaseRepository
         $database = new Database();
     }
     
-    public function AddPlayer($Player)
+    public function AddPlayer(Player $Player)
     {
-        if($Player instanceof Player)
-        {
-            $database.
-        }
+        //$database.
     }
 }
