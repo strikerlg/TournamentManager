@@ -1,14 +1,12 @@
 <?php
 
-namespace BananaNS;
-
 class Database
 {
   // Constants
   const DATABASE_IP = "localhost";
   const DATABASE_USERNAME = "root";
   const DATABASE_PASSWORD = "";
-  const DATABASE_DB = "banana";
+  const DATABASE_DB = "mydb";
 
   // Members
   private $mConnection = null;
@@ -79,7 +77,9 @@ class Database
   public function query($queryStr, $arguments = array())
   {
     if(!$this->isConnected())
-      return null;
+    {
+        return null;
+    }
 
     $query = $this->mConnection->prepare($queryStr);
     if(!$query)
@@ -100,8 +100,9 @@ class Database
     $params = array_merge($typesArr, $argVals);
 
     if(count($params) > 0)
+    {
       call_user_func_array(array($query, "bind_param"), $this->makeValuesReferences($params));
-
+    }
     $query->execute();
 
     $rows = array();
