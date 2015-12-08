@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
   <title>Tournament Manager</title>
-  <link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="styles/default.css">
+  <link rel="stylesheet" type="text/css" href="{{ asset('lib/bootstrap-3.3.5-dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
 </head>
 <body>
 <div class="mf-mobile-nav">
@@ -23,15 +23,15 @@
   <div class="mf-page mf-container">
     <div class="mf-page-header clearfix">
       <div class="mf-menu mf-menu-left pull-left">
-        <img class="mf-hamburger" src="img/hamburger.png">
+        <img class="mf-hamburger" src="{{ asset('img/hamburger.png') }}">
         <h1>Turnier Software</h1>
       </div>
       <div class="mf-main-menu mf-menu">
-        <a href="admin.html" class="mf-menu-item">Admin</a>
+        <a href="/admin" class="mf-menu-item">Admin</a>
         <a class="mf-item-active" href="#" class="mf-menu-item">Live-Ansicht</a>
       </div>
       <div class="mf-menu mf-menu-right pull-right">
-        <img src="img/logo.png">
+        <img src=" {{ asset('img/logo.png') }}">
       </div>
     </div>
 
@@ -54,7 +54,7 @@
     <div class="mf-section">
       <div class="mf-section-headline">
         <div class="mf-section-headline-inner mf-container">
-          <img src="img/fussball.gif"> Spiel 1 - Läuft...
+          <img src="{{ asset('img/fussball.gif') }}"> Spiel 1 - Läuft...
         </div>
       </div>
 
@@ -81,7 +81,7 @@
   </div>
 </div>
 
-<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
