@@ -1,5 +1,7 @@
+/*===--------------- General styling ---------------===*/
+
 body {
-  font-size: 42px;
+  font-size: 24px;
 }
 
 body * {
@@ -9,6 +11,8 @@ body * {
 a {
   color: #333;
 }
+
+/*===--------------- Page styling ---------------===*/
 
 .mf-page-wrap {
   transition: transform 0.5s
@@ -26,6 +30,8 @@ a {
   background-color: rgb(79, 129, 189);
 }
 
+/*===--------------- Menu styling ---------------===*/
+
 .mf-menu {
   padding: 5px 0;
   font-size: 24px;
@@ -38,6 +44,7 @@ a {
 
 .mf-menu h1 {
   margin: 0;
+  display: none;
 }
 
 .mf-menu a {
@@ -67,6 +74,8 @@ a {
   padding: 10px 0;
 }
 
+/*===--------------- Mobile Nav styling ---------------===*/
+
 .mf-mobile-nav {
   position: absolute;
   top: 0;
@@ -90,6 +99,8 @@ a {
   padding: 10px 0;
 }
 
+/*===--------------- Section & section separator styling ---------------===*/
+
 .mf-section-separator {
   text-align: center;
   line-height: 1.5em;
@@ -103,6 +114,7 @@ a {
   background-color: rgb(79, 129, 189);
   line-height: 1.5em;
   font-size: 75%;
+  text-align: center;
 }
 
 .mf-section-headline img {
@@ -114,15 +126,44 @@ a {
   padding-top: 20px;
   padding-bottom: 20px;
   color: #fff;
+  text-align: center;
 }
 
+.mf-section-inner.mf-container {
+  margin: 0 30px;
+}
+
+/*===--------------- Media Queries ---------------===*/
+
 @media (min-width: 768px) {
+  /*===--------------- General styling ---------------===*/
+
+  body {
+    font-size: 42px;
+  }
+
+  /*===--------------- Page styling ---------------===*/
+
   .mf-container {
     margin: 0 70px;
+  }
+
+  /*===--------------- Menu styling ---------------===*/
+
+  .mf-menu h1 {
+    display: inline;
   }
 
   .mf-mobile-nav {
     left: -270px;
     width: 270px;
   }
+
+  /*===--------------- Section styling ---------------===*/
+
+  .mf-section-headline {
+    text-align: left;
+  }
+
+  /*===--------------- Menu styling ---------------===*/
 }
