@@ -20,10 +20,10 @@ a {
 }
 
 .mf-page-toright {
-  -webkit-transform: translateX(200px);
-  -moz-transform: translateX(200px);
-  -ms-transform: translateX(200px);
-  transform: translateX(200px);
+  -webkit-transform: translateX(250px);
+  -moz-transform: translateX(250px);
+  -ms-transform: translateX(250px);
+  transform: translateX(250px);
 }
 
 .mf-container {
@@ -83,8 +83,8 @@ a {
 .mf-mobile-nav {
   position: absolute;
   top: 0;
-  left: -200px;
-  width: 200px;
+  left: -250px;
+  width: 250px;
   min-height: 100vh;
   background-color: rgb(79, 129, 189);
   transition: left 0.5s;
@@ -154,16 +154,9 @@ a {
     display: inline;
   }
 
-  .mf-mobile-nav {
-    left: -270px;
-    width: 270px;
-  }
-
   /*===--------------- Section styling ---------------===*/
 
   .mf-section-headline {
     text-align: left;
   }
-
-  /*===--------------- Menu styling ---------------===*/
 }
