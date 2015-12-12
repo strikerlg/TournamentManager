@@ -100,7 +100,14 @@ class TManager
         $this->handlePage("live");
         break;
       case "gruppen":
-        $this->renderTemplate("gruppen.html", array_merge($commonArgs, array()));
+        if ($this->loggedInAdmin() !== false)
+        {
+          $this->renderTemplate("gruppen.html", array_merge($commonArgs, array()));
+        }
+        else
+        {
+          $this->handlePage("login");
+        }
         break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
