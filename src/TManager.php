@@ -77,8 +77,11 @@ class TManager
       case "admin":
         $this->renderTemplate("admin.html");
         break;
+      case "gruppen":
+        $this->renderTemplate("gruppen.html");
+        break;
       default:
-        $this->renderTemplate("404.html", array("requestedPage" => $pageName));
+        $this->renderTemplate("404.html", array("requestedPage" => '"' . $pageName . '"'));
     }
   }
 }

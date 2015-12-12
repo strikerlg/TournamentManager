@@ -19,15 +19,15 @@
         <h1>Turnier Software</h1>
       </div>
       <div class="mf-main-menu mf-menu">
+        <a href="/" class="mf-menu-item">Live Ansicht</a>
         <a class="mf-item-active" href="#" class="mf-menu-item">Admin</a>
-        <a href="/" class="mf-menu-item">Live-Ansicht</a>
       </div>
       <div class="mf-menu mf-menu-right pull-right">
         <img src="{{ asset('img/logo.png') }}">
       </div>
     </div>
 
-    <div class="mf-section-separator">Gruppen anzeigen</div>
+    <div class="mf-section-separator">Admin Login</div>
 
     <div class="mf-section">
       <div class="mf-section-headline">
@@ -37,57 +37,22 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <table class="hidden-sm hidden-xs mf-table">
-          <tr>
-            <th>Gruppen Name</th>
-            <th>Uhrzeit</th>
-            <th>Team 1</th>
-            <th>Team 2</th>
-            <th class="mf-t1-header">Punke T1</th>
-            <th class="mf-t2-header">Punke T2</th>
-            <th>Läuft</th>
-            <th>Fertig</th>
-          </tr>
-          <tr>
-            <td>Gruppe 1</td>
-            <td>13:20</td>
-            <td>Die Roten</td>
-            <td>Die Grünen</td>
-            <td>5</td>
-            <td>0</td>
-            <td><input type="checkbox" checked=""></td>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
-
-        <table class="visible-sm visible-xs mf-table" style="width: 100%;">
-          <tr>
-            <th>Gruppen Name</th>
-            <td>Gruppe 1</td>
-          </tr>
-          <tr>
-            <th>Uhrzeit</th>
-            <td>13:20</td>
-          </tr>
-          <tr>
-            <th class="mf-t1-header">Team 1</th>
-            <td>Die Roten</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <th class="mf-t2-header">Team 2</th>
-            <td>Die Grünen</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Läuft</th>
-            <td><input type="checkbox" checked=""></td>
-          </tr>
-          <tr>
-            <th>Fertig</th>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
+        <form class="mf-login-form" method="GET" action="/login.php">
+          <div class="clearfix">
+            <div class="col-xs-6"><label for="input-username">Benutzername:</label></div>
+            <div class="col-xs-6"><input id="input-username" name="username" type="text"></div>
+          </div>
+          <div class="clearfix">
+            <div class="col-xs-6"><label for="input-password">Passwort:</label></div>
+            <div class="col-xs-6"><input id="input-password" name="password" type="password"></div>
+          </div>
+          <div class="mf-submit-row clearfix">
+            <div class="col-xs-6">&nbsp;</div>
+            <div class="col-xs-6">
+              <input type="submit" value="Anmelden">
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
