@@ -84,7 +84,7 @@ class Database
     $query = $this->mConnection->prepare($queryStr);
     if(!$query)
     {
-      echo "<span style='font-weight:bold;color:red;font-size:24px;'>HOLY SHIT MOTHERFUCKER - </span><span style='font-size:20px;'>" . $this->mConnection->error . "</span><br>";
+      echo "<span style='font-weight:bold;color:red;font-size:24px;'>Oha... - </span><span style='font-size:20px;'>" . $this->mConnection->error . "</span><br>";
       return null;
     }
 

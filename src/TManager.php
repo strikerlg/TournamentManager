@@ -18,6 +18,8 @@ class TManager
     $this->twig = $this->initTwig();
     $this->db = $this->initDatabase();
     $this->dbRepo = new DatabaseRepository($this->db);
+
+    session_start();
   }
 
   public function __destruct()
@@ -72,26 +74,36 @@ class TManager
    */
   public function handlePage($pageName)
   {
+    $commonArgs = array("adminLoggedIn" => $this->loggedInAdmin() !== false);
+
     switch (strtolower($pageName))
     {
       case "live":
-        $this->renderTemplate("live.html");
+        $this->renderTemplate("live.html", array_merge($commonArgs, array()));
         break;
       case "admin":
-        $this->renderTemplate("admin.html");
+        $this->renderTemplate("admin.html", array_merge($commonArgs, array()));
         break;
       case "login":
         $result = $this->adminLogin();
         if ($result === false)
         {
-          $this->renderTemplate("admin.html", array("incorrectLogin" => true));
+          $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => true)));
+        }
+        else
+        {
+          $this->handlePage("live");
         }
         break;
+      case "logout":
+        $this->adminLogout();
+        $this->handlePage("live");
+        break;
       case "gruppen":
-        $this->renderTemplate("gruppen.html");
+        $this->renderTemplate("gruppen.html", array_merge($commonArgs, array()));
         break;
       default:
-        $this->renderTemplate("404.html", array("requestedPage" => '"' . $pageName . '"'));
+        $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
     }
   }
 
@@ -108,6 +120,28 @@ class TManager
       return false;
     }
 
+    $_SESSION["admin"] = $admin;
     return true;
+  }
+
+  private function adminLogout()
+  {
+    unset($_SESSION["admin"]);
+  }
+
+  private function loggedInAdmin()
+  {
+    if (!isset($_SESSION["admin"]))
+    {
+      return false;
+    }
+
+    $admin = $_SESSION["admin"];
+    if ($admin instanceof Admin)
+    {
+      return $admin;
+    }
+
+    return false;
   }
 }

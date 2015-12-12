@@ -107,7 +107,6 @@ class DatabaseRepository
     $result = $this->db->query("select * from Admin where Username = ? and Password = ?",
                                array(sqlString($username), sqlString($password)));
 
-    d($result);
     if ($result !== false && count($result) > 0)
     {
       $admin = new Admin();
