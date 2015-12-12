@@ -2,19 +2,22 @@
 
 require_once "Twig/Autoloader.php";
 require_once "Repository/Database.php";
+require_once "Repository/DatabaseRepository.php";
 
 /**
  * Class TManager - Hauptklasse der TournamentManager Website.
  */
 class TManager
 {
-  private $db;
   private $twig;
+  private $db;
+  private $dbRepo;
 
   public function __construct()
   {
     $this->twig = $this->initTwig();
     $this->db = $this->initDatabase();
+    $this->dbRepo = new DatabaseRepository($this->db);
   }
 
   public function __destruct()
@@ -77,11 +80,34 @@ class TManager
       case "admin":
         $this->renderTemplate("admin.html");
         break;
+      case "login":
+        $result = $this->adminLogin();
+        if ($result === false)
+        {
+          $this->renderTemplate("admin.html", array("incorrectLogin" => true));
+        }
+        break;
       case "gruppen":
         $this->renderTemplate("gruppen.html");
         break;
       default:
         $this->renderTemplate("404.html", array("requestedPage" => '"' . $pageName . '"'));
     }
+  }
+
+  private function adminLogin()
+  {
+    if (!isset($_POST["username"]) || !isset($_POST["password"]))
+    {
+      return false;
+    }
+
+    $admin = $this->dbRepo->getAdminByCredentials($_POST["username"], $_POST["password"]);
+    if ($admin === false)
+    {
+      return false;
+    }
+
+    return true;
   }
 }

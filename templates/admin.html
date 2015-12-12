@@ -37,7 +37,10 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <form class="mf-login-form" method="GET" action="/login.php">
+        {% if incorrectLogin == true %}
+          <span style="color: tomato;">Ungültige Benutzername-Passwort Kombination!<br><br></span>
+        {% endif %}
+        <form class="mf-login-form" method="POST" action="/login">
           <div class="clearfix">
             <div class="col-xs-6"><label for="input-username">Benutzername:</label></div>
             <div class="col-xs-6"><input id="input-username" name="username" type="text"></div>
