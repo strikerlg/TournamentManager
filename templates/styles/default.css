@@ -1,7 +1,7 @@
 /*===--------------- General styling ---------------===*/
 
 body {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 body * {
@@ -15,10 +15,14 @@ a {
 /*===--------------- Page styling ---------------===*/
 
 .mf-page-wrap {
-  transition: transform 0.5s
+  transition: all 0.5s;
+  transition-property: -webkit-transform, -moz-transform, -ms-transform, transform;
 }
 
 .mf-page-toright {
+  -webkit-transform: translateX(200px);
+  -moz-transform: translateX(200px);
+  -ms-transform: translateX(200px);
   transform: translateX(200px);
 }
 
@@ -127,10 +131,6 @@ a {
   padding-bottom: 20px;
   color: #fff;
   text-align: center;
-}
-
-.mf-section-inner.mf-container {
-  margin: 0 30px;
 }
 
 /*===--------------- Media Queries ---------------===*/
