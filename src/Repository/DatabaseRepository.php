@@ -14,6 +14,11 @@ class DatabaseRepository
     $this->db = $db;
   }
 
+  /**
+   * Fügt einen neuen Spieler in der Datenbank hinzu
+   * @param Player $player Der neue, hinzuzufügende Spieler
+   * @return bool Der Rückgabewert gibt an, ob das Hinzufügen erfolgreich abgeschlossen wurde
+   */
   public function addPlayer(Player $player)
   {
     $result = $this->db->query("insert into Player (Team_Id, Name, Vorname) values (?, ?, ?)",
@@ -27,6 +32,12 @@ class DatabaseRepository
     return false;
   }
 
+  /**
+   * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zurück
+   * @param $id Die ID des zu suchenden Spielers
+   * @return bool|Player Die Rückgabewert ist entweder der gefundene Spieler, oder false
+   *                        bei Auftritt eines Fehlers
+   */
   public function getPlayerById($id)
   {
     $result = $this->db->query("select * from Player where Id = ?",
@@ -44,6 +55,11 @@ class DatabaseRepository
     return false;
   }
 
+  /**
+   * Gibt alle Spieler in der Datenbank zurück
+   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Spieler beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
   public function getAllPlayers()
   {
     $result = $this->db->query("select * from Player");
@@ -67,6 +83,11 @@ class DatabaseRepository
     return false;
   }
 
+  /**
+   * Fügt ein neues Turnier in der Datenbank hinzu
+   * @param Tournament $tournament Das neu hinzuzufügende Turnier
+   * @return bool Der Rückgabewert gibt an, ob das Hinzufügen erfolgreich abgeschlossen wurde
+   */
   public function addTournament(Tournament $tournament)
   {
     $result = $this->db->query("insert into Tournament (Name) values (?)",
@@ -80,6 +101,11 @@ class DatabaseRepository
     return false;
   }
 
+  /**
+   * Gibt alle Turniere in der Datenbank zurück
+   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Turniere beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
   public function getAllTournaments()
   {
     $result = $this->db->query("select * from Tournament");
@@ -102,6 +128,13 @@ class DatabaseRepository
     return false;
   }
 
+  /**
+   * Sucht in der Datenbank nach dem Admin mit den angegebenen Anmeldedaten
+   * @param $username Der Benuzername des Admins
+   * @param $password Das Passwort des Admins
+   * @return Admin|bool Der Rückgabewert ist entweder der gefundene Admin, oder false bei Auftritt
+   *                        eines Fehlers
+   */
   public function getAdminByCredentials($username, $password)
   {
     $result = $this->db->query("select * from Admin where Username = ? and Password = ?",

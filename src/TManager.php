@@ -76,6 +76,11 @@ class TManager
   {
     $commonArgs = array("adminLoggedIn" => $this->loggedInAdmin() !== false);
 
+    /*
+     * TODO: Diesen großen switch durch sauberes Routing ersetzen, sodass auch
+     * im page_header.html Partial die aktuelle Seite mitgegeben werden kann (für das Highlighting).
+     */
+
     switch (strtolower($pageName))
     {
       case "live":
@@ -114,28 +119,44 @@ class TManager
     }
   }
 
+  /**
+   * Admin-Einlog Logik - Lest Benuzername und Passwort aus $_POST aus
+   * und versucht den Admin anhand dieser Daten einzuloggen
+   * @return bool Der Rückgabewert gibt an, ob der Admin erfolgreich eingeloggt wurde
+   */
   private function adminLogin()
   {
+    // username und password müssen beide logischerweise gesetzt sein
     if (!isset($_POST["username"]) || !isset($_POST["password"]))
     {
       return false;
     }
 
+    // Überprüfe ob die Logindaten korrekt sind
     $admin = $this->dbRepo->getAdminByCredentials($_POST["username"], $_POST["password"]);
     if ($admin === false)
     {
       return false;
     }
 
+    // Admin in Session speichern und fertig
     $_SESSION["admin"] = $admin;
     return true;
   }
 
+  /**
+   * Loggt den aktuelle eingeloggten Admin aus
+   */
   private function adminLogout()
   {
     unset($_SESSION["admin"]);
   }
 
+  /**
+   * Gibt den aktuellen eingeloggten Admin zurück, sofern vorhanden
+   * @return Admin|bool Der Rückgabewert enthält entweder den eingeloggten Admin wenn vorhanden,
+   * ansonnsten false
+   */
   private function loggedInAdmin()
   {
     if (!isset($_SESSION["admin"]))
