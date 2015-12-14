@@ -18,5 +18,12 @@ if (DEV_MODE === "debug")
 require_once "TManager.php";
 
 $tManager = new TManager();
-$page = isset($_GET["page"]) ? $_GET["page"] : "live";
-$tManager->handlePage($page);
+if (isset($_POST["action"]))
+{
+  d($_POST);
+}
+else
+{
+  $page = isset($_GET["page"]) ? $_GET["page"] : "live";
+  $tManager->handlePage($page);
+}
