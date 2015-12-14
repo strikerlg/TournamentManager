@@ -15,9 +15,9 @@ class DatabaseRepository
   }
 
   /**
-   * Fügt einen neuen Spieler in der Datenbank hinzu
-   * @param Player $player Der neue, hinzuzufügende Spieler
-   * @return bool Der Rückgabewert gibt an, ob das Hinzufügen erfolgreich abgeschlossen wurde
+   * Fï¿½gt einen neuen Spieler in der Datenbank hinzu
+   * @param Player $player Der neue, hinzuzufï¿½gende Spieler
+   * @return bool Der Rï¿½ckgabewert gibt an, ob das Hinzufï¿½gen erfolgreich abgeschlossen wurde
    */
   public function addPlayer(Player $player)
   {
@@ -33,9 +33,9 @@ class DatabaseRepository
   }
 
   /**
-   * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zurück
+   * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zurï¿½ck
    * @param $id Die ID des zu suchenden Spielers
-   * @return bool|Player Die Rückgabewert ist entweder der gefundene Spieler, oder false
+   * @return bool|Player Die Rï¿½ckgabewert ist entweder der gefundene Spieler, oder false
    *                        bei Auftritt eines Fehlers
    */
   public function getPlayerById($id)
@@ -56,8 +56,8 @@ class DatabaseRepository
   }
 
   /**
-   * Gibt alle Spieler in der Datenbank zurück
-   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Spieler beinhaltet,
+   * Gibt alle Spieler in der Datenbank zurï¿½ck
+   * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Spieler beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllPlayers()
@@ -84,9 +84,9 @@ class DatabaseRepository
   }
 
   /**
-   * Fügt ein neues Turnier in der Datenbank hinzu
-   * @param Tournament $tournament Das neu hinzuzufügende Turnier
-   * @return bool Der Rückgabewert gibt an, ob das Hinzufügen erfolgreich abgeschlossen wurde
+   * Fï¿½gt ein neues Turnier in der Datenbank hinzu
+   * @param Tournament $tournament Das neu hinzuzufï¿½gende Turnier
+   * @return bool Der Rï¿½ckgabewert gibt an, ob das Hinzufï¿½gen erfolgreich abgeschlossen wurde
    */
   public function addTournament(Tournament $tournament)
   {
@@ -100,10 +100,35 @@ class DatabaseRepository
 
     return false;
   }
+  
+  /**
+   * LÃ¶scht ein Tournament aus der DB
+   * @param $Id id des zu lÃ¶schenden Tournaments
+   * @return bool ob peration Ok
+   */
+  public function RemoveTournament($id)
+  {
+      $result = $this->db->query("delete from tournament where id = (?)",
+                               $id);
+     
+      return $result;
+  }
+  
+   /**
+   * Updated ein Tournament auf/in der DB
+   * @param $Id id des Tournaments $name name des Tournaments
+   * @return bool ob peration Ok
+   */
+  public function UpdateTournament($id, $name)
+  {
+      $result = $this->db->query("update tournament set name = (?) where id = (?)", $name, $id);
+      
+      return $result;
+  }
 
   /**
-   * Gibt alle Turniere in der Datenbank zurück
-   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Turniere beinhaltet,
+   * Gibt alle Turniere in der Datenbank zurï¿½ck
+   * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Turniere beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllTournaments()
@@ -132,7 +157,7 @@ class DatabaseRepository
    * Sucht in der Datenbank nach dem Admin mit den angegebenen Anmeldedaten
    * @param $username Der Benuzername des Admins
    * @param $password Das Passwort des Admins
-   * @return Admin|bool Der Rückgabewert ist entweder der gefundene Admin, oder false bei Auftritt
+   * @return Admin|bool Der Rï¿½ckgabewert ist entweder der gefundene Admin, oder false bei Auftritt
    *                        eines Fehlers
    */
   public function getAdminByCredentials($username, $password)
