@@ -25,63 +25,34 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <table class="hidden-sm hidden-xs mf-table">
-          <tr>
-            <th>Gruppen Name</th>
-            <th>Uhrzeit</th>
-            <th>Team 1</th>
-            <th>Team 2</th>
-            <th class="mf-t1-header">Punke T1</th>
-            <th class="mf-t2-header">Punke T2</th>
-            <th>Läuft</th>
-            <th>Fertig</th>
-          </tr>
-          <tr>
-            <td>Gruppe 1</td>
-            <td>13:20</td>
-            <td>Die Roten</td>
-            <td>Die Grünen</td>
-            <td>5</td>
-            <td>0</td>
-            <td><input type="checkbox" checked=""></td>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
-
-        <table class="visible-sm visible-xs mf-table" style="width: 100%;">
-          <tr>
-            <th>Gruppen Name</th>
-            <td>Gruppe 1</td>
-          </tr>
-          <tr>
-            <th>Uhrzeit</th>
-            <td>13:20</td>
-          </tr>
-          <tr>
-            <th class="mf-t1-header">Team 1</th>
-            <td>Die Roten</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <th class="mf-t2-header">Team 2</th>
-            <td>Die Grünen</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Läuft</th>
-            <td><input type="checkbox" checked=""></td>
-          </tr>
-          <tr>
-            <th>Fertig</th>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
+        <div class="after-records clearfix">
+          <div class="col-xs-6">
+            <input class="save-all-records" type="button" value="Speichern"/>
+          </div>
+          <div class="col-xs-6">
+            <input class="add-record" type="button" value="Hinzufügen"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<form class="hidden" id="record-template" data-table="Tournament" method="POST" action="/index.php">
+  <input type="hidden" name="Id" value="0"/>
+
+  <table class="mf-table">
+    <tr>
+      <th><label>Name</label></th>
+      <td><input name="Name" type="text"></td>
+      <td><input type="button" value="Speichern"/></td>
+      <td><input type="button" value="Löschen"/></td>
+    </tr>
+  </table>
+</form>
+
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/edit.js') }}"></script>
 </body>
 </html>
