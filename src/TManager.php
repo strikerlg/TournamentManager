@@ -40,7 +40,7 @@ class TManager
 
     $assetFunc = new Twig_SimpleFunction("asset", function($assetPath)
     {
-      return DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . $assetPath;
+      return "/templates/" . $assetPath;
     });
 
     $twig->addFunction($assetFunc);

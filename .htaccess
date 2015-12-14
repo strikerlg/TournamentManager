@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Favicon soll natürlich geladen werden können.
+RewriteRule ^favicon.ico$ favicon.ico [L]
+
 # Auf Templates und Assets soll natürlich zugegriffen werden können.
 RewriteRule ^templates/(.+)$ templates/$1 [L]
 
