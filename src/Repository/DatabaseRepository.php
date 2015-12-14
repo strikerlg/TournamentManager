@@ -125,6 +125,36 @@ class DatabaseRepository
       
       return $result;
   }
+  
+    /**
+   * Gibt alle Teams von der Datenbank zur�ck
+   * @return array|bool Der R�ckgabewert ist entweder ein Array welches alle Teams beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function GetAllTeams()
+  {
+      $queryString = "select team.Id,  team.Name,  team.TournamentId, tournament.Name as 'TournamentName' from team, tournament where team.tournamentId = tournament.Id";     
+      
+      $result = $this->db->query($queryString);
+      
+      if($result !== FALSE)
+      {
+          $allTeams = array();
+          
+          foreach ($result as $r)
+          {
+               $team = new Team();
+               $team->id = $r["Id"];
+               $team->name = $r["Name"];
+               $team->TournamentId = $r["TournamentId"];
+               $team->TournamentId = $r["TournamentName"];
+               array_push($allTeams, $team);
+          }
+          
+          return $allteams;
+      }
+      return false;
+  }
 
   /**
    * Gibt alle Turniere in der Datenbank zur�ck
