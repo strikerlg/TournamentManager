@@ -105,17 +105,25 @@ class TManager
         $this->handlePage("live");
         break;
       case "gruppen":
-        if ($this->loggedInAdmin() !== false)
-        {
-          $this->renderTemplate("gruppen.html", array_merge($commonArgs, array()));
-        }
-        else
-        {
-          $this->handlePage("login");
-        }
+        $this->authorizedPage("gruppen.html", array_merge($commonArgs, array()));
+        break;
+      case "turniere":
+        $this->authorizedPage("turniere.html", array_merge($commonArgs, array()));
         break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
+    }
+  }
+
+  private function authorizedPage($template, $args)
+  {
+    if ($this->loggedInAdmin() !== false)
+    {
+      $this->renderTemplate($template, $args);
+    }
+    else
+    {
+      $this->handlePage("login");
     }
   }
 
