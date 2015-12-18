@@ -27,7 +27,7 @@
       <div class="mf-section-inner mf-container">
         <div class="after-records clearfix">
           <div class="col-xs-6">
-            <input class="save-all-records" type="button" value="Speichern"/>
+            <input class="save-all-records"  data-table="Tournament" type="button" value="Speichern"/>
           </div>
           <div class="col-xs-6">
             <input class="add-record" type="button" value="Hinzufügen"/>
@@ -40,7 +40,7 @@
 
 {% block record %}
 <form class="hidden" id="record-template" data-table="Tournament" method="POST" action="/index.php">
-  <input type="hidden" name="Id" value="0"/>
+  <input type="hidden" name="Id" value="null"/>
 
   <table class="mf-table">
     <tr>
