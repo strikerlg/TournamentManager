@@ -13,19 +13,24 @@
 
     $saveAllRecords.on("click", function() {
       //saveAllForms($afterRecords.parent(), "index.php", "saveAll", $(this).attr("data-table"));
+      var url = "index.php";
+      var table = $(this).attr("data-table");
+      $formContainer = $afterRecords.parent();
 
+      saveAllForms(allInsertForms($formContainer), url, "saveAll", table);
+      saveAllForms(allUpdateForms($formContainer), url, "updateAll", table);
     });
   });
 
   function newRecord() {
     var $newRecord = $("#record-template").clone();
     $newRecord.removeClass("hidden");
+    $newRecord.attr("id", "");
     return $newRecord;
   }
 
-  function saveAllForms($formContainer, url, action, table) {
+  function saveAllForms($allForms, url, action, table) {
     var allForms = [];
-    var $allForms = $formContainer.find("form");
 
     $allForms.each(function() {
       var $form = $(this);
@@ -33,14 +38,22 @@
       allForms.push(formData);
     });
 
+    if (allForms.length <= 0) {
+      return;
+    }
+
     $.post(url,
       { forms: allForms, action: action, table: table },
       function(data) {
-        $("html").html(data);
+        //$("html").html(data);
       });
   }
 
   function allInsertForms($formContainer) {
-    return $formContainer.find(".mf-form.new");
+    return $($formContainer.find(".mf-form.new"));
+  }
+
+  function allUpdateForms($formContainer) {
+    return $($formContainer.find(".mf-form").not(".new").not(".hidden"));
   }
 })(jQuery);

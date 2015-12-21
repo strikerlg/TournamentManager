@@ -194,7 +194,9 @@ class TManager
     {
       case "saveAll":
         $this->insertAll($table, $_POST["forms"]);
-        $this->handlePage("turniere");
+        break;
+      case "updateAll":
+        $this->updateAll($table, $_POST["forms"]);
         break;
     }
   }
@@ -205,18 +207,38 @@ class TManager
    * @param $records Die Datensätze die zu inserten sind
    * @return array|null Das Result der Datenbank-Query Methode
    */
-  private function insertAll($table, $records)
-  {
+  private function insertAll($table, $records) {
+    if (count($records) <= 0) {
+      return;
+    }
+
     $columnNames = array_column($records[0], "name");
     $values = '(' . implode(", ", $columnNames) . ')';
 
     $data = [];
-    foreach ($records as $record)
-    {
+    foreach ($records as $record) {
       $data[] = '(' . implode(", ", array_map(function ($i) { return '\'' . $i . '\''; }, array_column($record, "value"))) . ')';
     }
 
     $queryString = "insert into $table $values values " . implode(", ", $data);
-    return $this->db->query($queryString);
+    $result = $this->db->query($queryString);
+  }
+
+  private function updateAll($table, $records) {
+    if (count($records) <= 0) {
+      return;
+    }
+
+    foreach ($records as $record) {
+      $sets = [];
+      $recordId = $record[0]["value"];
+
+      foreach ($record as $field) {
+        $sets[] = array("name" => $field["name"], "value" => $field["value"]);
+      }
+
+      $queryString = "update $table set " . implode(", ", array_map(function ($i) { return $i["name"] . '=\'' . $i["value"] . '\''; }, $sets)) . " where Id = $recordId";
+      $this->db->query($queryString);
+    }
   }
 }

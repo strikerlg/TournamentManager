@@ -43,7 +43,7 @@
 </div>
 
 {% macro record(id, name, hidden = false) %}
-<div class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" data-table="Tournament" method="POST" action="/index.php">
+<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" data-table="Tournament" method="POST" action="/index.php">
   {% if id %}
   <input type="hidden" name="Id" value="{{ id }}">
   {% endif %}
@@ -55,7 +55,7 @@
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
   </table>
-</div>
+</form>
 {% endmacro %}
 
 {{ _self.record(null, '', true) }}
