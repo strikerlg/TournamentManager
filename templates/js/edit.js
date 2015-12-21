@@ -22,9 +22,10 @@
       $formContainer = $afterRecords.parent();
 
       saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table);
-      saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table);
-
-      //location.reload();
+      saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table,
+      function() {
+        location.reload();
+      });
     });
   });
 
@@ -36,7 +37,6 @@
     }
     else {
       deleteForm($form);
-      $form.remove();
     }
   }
 
@@ -50,7 +50,7 @@
     return $newRecord;
   }
 
-  function saveAllForms($allForms, url, action, table) {
+  function saveAllForms($allForms, url, action, table, completeHandler) {
     var allForms = [];
 
     $allForms.each(function() {
@@ -64,13 +64,17 @@
     }
 
     $.post(url,
-      {forms: allForms, action: action, table: table});
+      {forms: allForms, action: action, table: table},
+    completeHandler || function(){});
   }
 
   function deleteForm($form) {
     var id = $form.find(".field-id").val();
     $.post(HANDLER_URL,
-      {id: id, table: $form.attr("data-table"), action: "deleteRecord"});
+      {id: id, table: $form.attr("data-table"), action: "deleteRecord"},
+    function() {
+      $form.remove();
+    });
   }
 
   function allInsertForms($formContainer) {
