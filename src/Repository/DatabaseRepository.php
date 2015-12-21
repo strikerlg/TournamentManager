@@ -31,6 +31,21 @@ class DatabaseRepository
 
     return false;
   }
+  
+  public function removePlayer($id)
+  {
+      $result = $this->db->query("delete from player where id = (?)",
+                               $id);
+     
+      return $result;
+  }
+  
+  public function updatePlayer(Player $player)
+  {
+      $result = $this->db->query("update player set teamid = (?), vorname = (?), name = (?) where id = (?)", $player->teamId, $player->name, $player->lastName, $player->id);
+      
+      return $result;
+  }
 
   /**
    * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zur�ck
@@ -40,7 +55,7 @@ class DatabaseRepository
    */
   public function getPlayerById($id)
   {
-    $result = $this->db->query("select * from Player where Id = ?",
+    $result = $this->db->query("select player.id, player.name, player.vorname, player.teamid, mydb.team.name as 'TeamName', mydb.group.Name as 'GroupName' from player, team, mydb.group where player.teamid = team.id and team.tournamentid = group.tournamentid and player.Id = ?",
                                array(sqlInt($id)));
     if ($result !== false && count($result) > 0)
     {
@@ -48,7 +63,9 @@ class DatabaseRepository
       $player->id = $result[0]["Id"];
       $player->name = $result[0]["Vorname"];
       $player->lastName = $result[0]["Name"];
-      $player->teamId = $result[0]["Team_Id"];
+      $player->teamId = $result[0]["TeamId"];
+      $player->teamName = $result[0]["TeamName"];
+      $player->groupName = $result[0]["GroupName"];
       return $player;
     }
 
@@ -62,7 +79,7 @@ class DatabaseRepository
    */
   public function getAllPlayers()
   {
-    $result = $this->db->query("select * from Player");
+    $result = $this->db->query("select player.id, player.name, player.vorname, player.teamid, mydb.team.name as 'TeamName', mydb.group.Name as 'GroupName' from player, team, mydb.group where player.teamid = team.id and team.tournamentid = group.tournamentid");
     if ($result !== false)
     {
       $allPlayers = array();
@@ -73,7 +90,9 @@ class DatabaseRepository
         $player->id = $r["Id"];
         $player->name = $r["Vorname"];
         $player->lastName = $r["Name"];
-        $player->teamId = $r["Team_Id"];
+        $player->teamId = $r["TeamId"];
+        $player->teamName = $r["TeamName"];
+        $player->groupName = $r["GroupName"];
         array_push($allPlayers, $player);
       }
 
@@ -106,7 +125,7 @@ class DatabaseRepository
    * @param $Id id des zu löschenden Tournaments
    * @return bool ob peration Ok
    */
-  public function RemoveTournament($id)
+  public function removeTournament($id)
   {
       $result = $this->db->query("delete from tournament where id = (?)",
                                $id);
@@ -119,9 +138,9 @@ class DatabaseRepository
    * @param $Id id des Tournaments $name name des Tournaments
    * @return bool ob peration Ok
    */
-  public function UpdateTournament($id, $name)
+  public function updateTournament(Tournament $tournament)
   {
-      $result = $this->db->query("update tournament set name = (?) where id = (?)", $name, $id);
+      $result = $this->db->query("update tournament set name = (?) where id = (?)", $tournament->name, $tournament->id);
       
       return $result;
   }
@@ -131,7 +150,7 @@ class DatabaseRepository
    * @return array|bool Der R�ckgabewert ist entweder ein Array welches alle Teams beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
    */
-  public function GetAllTeams()
+  public function getAllTeams()
   {
       $queryString = "select team.Id,  team.Name,  team.TournamentId, tournament.Name as 'TournamentName' from team, tournament where team.tournamentId = tournament.Id";     
       

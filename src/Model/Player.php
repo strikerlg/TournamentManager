@@ -6,4 +6,6 @@ class Player
   public $name;
   public $lastName;
   public $teamId;
+  public $teamName;
+  public $groupName;
 }
