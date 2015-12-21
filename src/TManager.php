@@ -190,6 +190,8 @@ class TManager
   {
     $table = $_POST["table"];
 
+    d($_POST);
+
     switch ($action)
     {
       case "saveAll":
@@ -197,6 +199,9 @@ class TManager
         break;
       case "updateAll":
         $this->updateAll($table, $_POST["forms"]);
+        break;
+      case "deleteRecord":
+        $this->deleteRecord($table, $_POST["id"]);
         break;
     }
   }
@@ -221,9 +226,15 @@ class TManager
     }
 
     $queryString = "insert into $table $values values " . implode(", ", $data);
+    echo $queryString . "<br>";
     $result = $this->db->query($queryString);
   }
 
+  /**
+   * Aktuallisiert die übergebenen Datensätze in der angegebenen Tabelle
+   * @param $table Die Tabelle
+   * @param $records Die Datensätze
+   */
   private function updateAll($table, $records) {
     if (count($records) <= 0) {
       return;
@@ -240,5 +251,14 @@ class TManager
       $queryString = "update $table set " . implode(", ", array_map(function ($i) { return $i["name"] . '=\'' . $i["value"] . '\''; }, $sets)) . " where Id = $recordId";
       $this->db->query($queryString);
     }
+  }
+
+  /**
+   * Löscht den übergebenen Datensatz in der übergebenen Tabelle
+   * @param $table Die Tabelle
+   * @param $recordId Die ID des zu löschende Datensatz
+   */
+  private function deleteRecord($table, $recordId) {
+    $this->db->query("delete from $table where Id = ?", array(sqlInt($recordId)));
   }
 }

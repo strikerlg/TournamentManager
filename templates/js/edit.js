@@ -1,4 +1,6 @@
 (function() {
+  var HANDLER_URL = "index.php";
+
   $(document).ready(function() {
     var $afterRecords = $(".after-records");
     var $addRecord = $(".add-record");
@@ -11,23 +13,40 @@
       $newRecord.insertBefore($afterRecords);
     });
 
+    $deleteRecordButtons.on("click", function() {
+      onDeleteClick($(this));
+    });
+
     $saveAllRecords.on("click", function() {
-      //saveAllForms($afterRecords.parent(), "index.php", "saveAll", $(this).attr("data-table"));
-      var url = "index.php";
       var table = $(this).attr("data-table");
       $formContainer = $afterRecords.parent();
 
-      saveAllForms(allInsertForms($formContainer), url, "saveAll", table);
-      saveAllForms(allUpdateForms($formContainer), url, "updateAll", table);
+      saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table);
+      saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table);
 
       location.reload();
     });
   });
 
+  function onDeleteClick($sender) {
+    var $form = $($sender.parents("form"));
+
+    if($form.hasClass("new")) {
+      $form.remove();
+    }
+    else {
+      deleteForm($form);
+      $form.remove();
+    }
+  }
+
   function newRecord() {
-    var $newRecord = $("#record-template").clone();
+    var $newRecord = $("#record-template.hidden").clone();
     $newRecord.removeClass("hidden");
     $newRecord.attr("id", "");
+    $newRecord.find(".delete-record").on("click", function() {
+      onDeleteClick($(this));
+    });
     return $newRecord;
   }
 
@@ -40,15 +59,18 @@
       allForms.push(formData);
     });
 
-    if (allForms.length <= 0) {
+    if(allForms.length <= 0) {
       return;
     }
 
     $.post(url,
-      { forms: allForms, action: action, table: table },
-      function(data) {
-        //$("html").html(data);
-      });
+      {forms: allForms, action: action, table: table});
+  }
+
+  function deleteForm($form) {
+    var id = $form.find(".field-id").val();
+    $.post(HANDLER_URL,
+      {id: id, table: $form.attr("data-table"), action: "deleteRecord"});
   }
 
   function allInsertForms($formContainer) {
