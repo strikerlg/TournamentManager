@@ -25,6 +25,10 @@
       </div>
 
       <div class="mf-section-inner mf-container">
+        {% for turnier in turniere %}
+          {{ _self.record(turnier.Id, turnier.Name) }}
+        {% endfor %}
+
         <div class="after-records clearfix">
           <div class="col-xs-6">
             <input class="save-all-records"  data-table="Tournament" type="button" value="Speichern"/>
@@ -38,22 +42,23 @@
   </div>
 </div>
 
-{% block record %}
-<form class="hidden" id="record-template" data-table="Tournament" method="POST" action="/index.php">
-  <input type="hidden" name="Id" value="null"/>
+{% macro record(id, name, hidden = false) %}
+<div class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" data-table="Tournament" method="POST" action="/index.php">
+  {% if id %}
+  <input type="hidden" name="Id" value="{{ id }}">
+  {% endif %}
 
   <table class="mf-table">
     <tr>
       <th><label>Name</label></th>
-      <td><input name="Name" type="text"></td>
-      <td><input class="save-record" type="button" value="Speichern"/></td>
+      <td><input name="Name" type="text" value="{{ name }}"></td>
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
   </table>
-</form>
-{% endblock %}
+</div>
+{% endmacro %}
 
-{{ block('record') }}
+{{ _self.record(null, '', true) }}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>

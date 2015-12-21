@@ -20,7 +20,7 @@ require_once "TManager.php";
 $tManager = new TManager();
 if (isset($_POST["action"]))
 {
-  d($_POST);
+  $tManager->handleAction($_POST["action"]);
 }
 else
 {

@@ -108,7 +108,8 @@ class TManager
         $this->authorizedPage("gruppen.html", array_merge($commonArgs, array()));
         break;
       case "turniere":
-        $this->authorizedPage("turniere.html", array_merge($commonArgs, array()));
+        $turniere = $this->db->query("select * from Tournament");
+        $this->authorizedPage("turniere.html", array_merge($commonArgs, array("turniere" => $turniere)));
         break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
@@ -179,5 +180,43 @@ class TManager
     }
 
     return false;
+  }
+
+  /**
+   * Angegebene Action ausführen
+   * @param $action Die Action
+   */
+  public function handleAction($action)
+  {
+    $table = $_POST["table"];
+
+    switch ($action)
+    {
+      case "saveAll":
+        $this->insertAll($table, $_POST["forms"]);
+        $this->handlePage("turniere");
+        break;
+    }
+  }
+
+  /**
+   * Inserte die übergebenen Datensätze in die angegebene Tabelle
+   * @param $table Die Tabelle in die inserted wird
+   * @param $records Die Datensätze die zu inserten sind
+   * @return array|null Das Result der Datenbank-Query Methode
+   */
+  private function insertAll($table, $records)
+  {
+    $columnNames = array_column($records[0], "name");
+    $values = '(' . implode(", ", $columnNames) . ')';
+
+    $data = [];
+    foreach ($records as $record)
+    {
+      $data[] = '(' . implode(", ", array_map(function ($i) { return '\'' . $i . '\''; }, array_column($record, "value"))) . ')';
+    }
+
+    $queryString = "insert into $table $values values " . implode(", ", $data);
+    return $this->db->query($queryString);
   }
 }
