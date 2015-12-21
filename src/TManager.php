@@ -190,8 +190,6 @@ class TManager
   {
     $table = $_POST["table"];
 
-    d($_POST);
-
     switch ($action)
     {
       case "saveAll":

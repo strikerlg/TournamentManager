@@ -24,7 +24,7 @@
       saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table);
       saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table);
 
-      location.reload();
+      //location.reload();
     });
   });
 
