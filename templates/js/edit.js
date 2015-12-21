@@ -19,6 +19,8 @@
 
       saveAllForms(allInsertForms($formContainer), url, "saveAll", table);
       saveAllForms(allUpdateForms($formContainer), url, "updateAll", table);
+
+      location.reload();
     });
   });
 
