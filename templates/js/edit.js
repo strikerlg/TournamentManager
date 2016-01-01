@@ -36,7 +36,14 @@
       $form.remove();
     }
     else {
-      deleteForm($form);
+      if ($form.hasClass("marked-delete")) {
+        $form.removeClass("marked-delete");
+        $form.find(".delete-record").attr("value", "Löschen");
+      }
+      else {
+        $form.addClass("marked-delete");
+        $form.find(".delete-record").attr("value", "Nicht löschen");
+      }
     }
   }
 
@@ -52,6 +59,18 @@
 
   function saveAllForms($allForms, url, action, table, completeHandler) {
     var allForms = [];
+
+    $toDeleteForms = $allForms.filter(".marked-delete");
+    if ($toDeleteForms.length > 0) {
+      if (confirm("Wollen Sie " + $toDeleteForms.length + " Datensatz(e) wirklich endgültig löschen?")) {
+        $toDeleteForms.each(function() { deleteForm($(this)); });
+      }
+      else {
+        if (!confirm("Wollen Sie mit dem aktuallisieren der restlichen Datensätze fortfahren?")) {
+          return;
+        }
+      }
+    }
 
     $allForms.each(function() {
       var $form = $(this);
