@@ -7,5 +7,4 @@ class Player
   public $lastName;
   public $teamId;
   public $teamName;
-  public $groupName;
 }

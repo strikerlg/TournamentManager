@@ -116,6 +116,11 @@ class TManager
         $turniere = $this->dbRepo->getAllTournaments();
         $this->authorizedPage("turniere.html", array_merge($commonArgs, array("turniere" => $turniere)));
         break;
+      case "spieler":
+        $players = $this->dbRepo->getAllPlayers();
+        $teams = $this->dbRepo->getAllTeams();
+        $this->authorizedPage("spieler.html", array_merge($commonArgs, array("players" => $players, "teams" => $teams)));
+        break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
     }
@@ -229,6 +234,7 @@ class TManager
     }
 
     $queryString = "insert into $table $values values " . implode(", ", $data);
+    //echo $queryString . "<br>";
     $result = $this->db->query($queryString);
   }
 
