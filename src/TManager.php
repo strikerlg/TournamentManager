@@ -108,7 +108,7 @@ class TManager
         $this->authorizedPage("gruppen.html", array_merge($commonArgs, array()));
         break;
       case "turniere":
-        $turniere = $this->db->query("select * from Tournament");
+        $turniere = $this->dbRepo->getAllTournaments();
         $this->authorizedPage("turniere.html", array_merge($commonArgs, array("turniere" => $turniere)));
         break;
       default:
