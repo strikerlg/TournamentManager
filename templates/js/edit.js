@@ -18,7 +18,7 @@
     });
 
     $saveAllRecords.on("click", function() {
-      var table = $(this).attr("data-table");
+      var table = $("body").attr("data-table");
       $formContainer = $afterRecords.parent();
 
       saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table);
@@ -90,7 +90,7 @@
   function deleteForm($form) {
     var id = $form.find(".field-id").val();
     $.post(HANDLER_URL,
-      {id: id, table: $form.attr("data-table"), action: "deleteRecord"},
+      {id: id, table: $("body").attr("data-table"), action: "deleteRecord"},
     function() {
       $form.remove();
     });

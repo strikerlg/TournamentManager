@@ -70,7 +70,7 @@ class TManager
 
   /**
    * Angegeben Seite anzeigen.
-   * @param $pageName Der Name der Seite
+   * @param $pageName Der Name der anzuzeigenden Seite
    */
   public function handlePage($pageName)
   {

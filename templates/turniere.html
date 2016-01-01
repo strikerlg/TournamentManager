@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/edit.css') }}">
 </head>
-<body>
+<body data-table="Tournament">
 {% include "partials/mobile_nav.html" %}
 
 <div class="mf-page-wrap">
@@ -31,7 +31,7 @@
 
         <div class="after-records clearfix">
           <div class="col-xs-6">
-            <input class="save-all-records"  data-table="Tournament" type="button" value="Speichern"/>
+            <input class="save-all-records" type="button" value="Speichern"/>
           </div>
           <div class="col-xs-6">
             <input class="add-record" type="button" value="Hinzufügen"/>
@@ -43,7 +43,7 @@
 </div>
 
 {% macro record(id, name, hidden = false) %}
-<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" data-table="Tournament" method="POST" action="/index.php">
+<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
   {% if id %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
