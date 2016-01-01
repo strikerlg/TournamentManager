@@ -107,6 +107,11 @@ class TManager
       case "gruppen":
         $this->authorizedPage("gruppen.html", array_merge($commonArgs, array()));
         break;
+      case "teams":
+        $teams = $this->dbRepo->getAllTeams();
+        $turniere = $this->dbRepo->getAllTournaments();
+        $this->authorizedPage("teams.html", array_merge($commonArgs, array("turniere" => $turniere, "teams" => $teams)));
+        break;
       case "turniere":
         $turniere = $this->dbRepo->getAllTournaments();
         $this->authorizedPage("turniere.html", array_merge($commonArgs, array("turniere" => $turniere)));
@@ -224,7 +229,6 @@ class TManager
     }
 
     $queryString = "insert into $table $values values " . implode(", ", $data);
-    echo $queryString . "<br>";
     $result = $this->db->query($queryString);
   }
 

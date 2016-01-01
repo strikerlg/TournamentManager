@@ -4,6 +4,7 @@ require_once "Repository/Database.php";
 require_once "Model/Player.php";
 require_once "Model/Tournament.php";
 require_once "Model/Admin.php";
+require_once "Model/Team.php";
 
 class DatabaseRepository
 {
@@ -142,7 +143,7 @@ class DatabaseRepository
 
     public function addTeam(Team $team)
     {
-        $result = $this->db->query("insert into team(name, tournamentid) values(?,?);", $team->Name, $team->TournamentId);
+        $result = $this->db->query("insert into team(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
 
         return $result;
     }
@@ -156,7 +157,7 @@ class DatabaseRepository
 
     public function updateTeam(Team $team)
     {
-        $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?", $team->Name, $team->TournamentId, $team->Id);
+        $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?", $team->name, $team->tournamentId, $team->id);
 
         if ($result !== false) {
             $team->id = $this->db->lastInsertedID();
@@ -173,7 +174,7 @@ class DatabaseRepository
      */
     public function getAllTeams()
     {
-        $queryString = "select team.Id,  team.Name,  team.TournamentId, tournament.Name as 'TournamentName' from team, tournament where team.tournamentId = tournament.Id";
+        $queryString = "select Team.Id, Team.Name, Team.TournamentId, Tournament.Name as 'TournamentName' from Team, Tournament where Team.TournamentId = Tournament.Id";
 
         $result = $this->db->query($queryString);
 
@@ -184,8 +185,8 @@ class DatabaseRepository
                 $team = new Team();
                 $team->id = $r["Id"];
                 $team->name = $r["Name"];
-                $team->TournamentId = $r["TournamentId"];
-                $team->TournamentName = $r["TournamentName"];
+                $team->tournamentId = $r["TournamentId"];
+                $team->tournamentName = $r["TournamentName"];
                 array_push($allTeams, $team);
             }
 

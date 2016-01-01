@@ -2,8 +2,8 @@
 
 class Team
 {
-  public $Id;
-  public $Name;
-  public $TournamentId;
-  public $TournamentName;
+  public $id;
+  public $name;
+  public $tournamentId;
+  public $tournamentName;
 }
