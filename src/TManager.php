@@ -104,8 +104,13 @@ class TManager
         $this->adminLogout();
         $this->handlePage("live");
         break;
-      case "gruppen":
-        $this->authorizedPage("gruppen.html", array_merge($commonArgs, array()));
+      case "groups":
+        $teams = $this->dbRepo->getAllTeams();
+        $turniere = $this->dbRepo->getAllTournaments();
+        $this->authorizedPage("groups.html", array_merge($commonArgs, array("turniere" => $turniere, "teams" => $teams)));
+        break;
+      case "matches":
+        $this->authorizedPage("matches.html", array_merge($commonArgs, array()));
         break;
       case "teams":
         $teams = $this->dbRepo->getAllTeams();

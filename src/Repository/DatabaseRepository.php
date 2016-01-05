@@ -182,6 +182,33 @@ class DatabaseRepository {
   }
 
   /**
+   * Gibt alle Gruppen von der Datenbank zurï¿½ck
+   * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Gruppen beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getAllGroups() {
+    $queryString = "select id, name from mydb.group where tournamentId is not null";
+
+    $result = $this->db->query($queryString);
+
+    if ($result !== FALSE) {
+      $allTeams = array();
+
+      foreach ($result as $r) {
+        $team = new Team();
+        $team->id = $r["Id"];
+        $team->name = $r["Name"];
+        $team->tournamentId = $r["TournamentId"];
+        $team->tournamentName = $r["TournamentName"];
+        array_push($allTeams, $team);
+      }
+
+      return $allTeams;
+    }
+    return false;
+  }
+
+  /**
    * Gibt alle Turniere in der Datenbank zurï¿½ck
    * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Turniere beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
@@ -227,3 +254,4 @@ class DatabaseRepository {
     return false;
   }
 }
+
