@@ -50,7 +50,7 @@ class DatabaseRepository {
    *                        bei Auftritt eines Fehlers
    */
   public function getPlayerById($id) {
-    $result = $this->db->query("select player.id, player.name, player.vorname, player.teamid, mydb.team.name as 'TeamName', mydb.group.Name as 'GroupName' from player, team, mydb.group where player.teamid = team.id and team.tournamentid = group.tournamentid and player.Id = ?",
+    $result = $this->db->query("select player.id, player.name, player.vorname, player.teamid, mydb.team.name as 'TeamName', mydb.Group.Name as 'GroupName' from player, team, mydb.Group where player.teamid = team.id and team.tournamentid = Group.tournamentid and player.Id = ?",
                                array(sqlInt($id)));
     if ($result !== false && count($result) > 0) {
       $player = new Player();
@@ -188,7 +188,7 @@ class DatabaseRepository {
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllGroups() {
-    $queryString = "select id, name, tournamentId from mydb.group where tournamentId is not null";
+    $queryString = "select id, name, tournamentId from mydb.Group where tournamentId is not null";
 
     $result = $this->db->query($queryString);
 
