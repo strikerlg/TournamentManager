@@ -187,23 +187,22 @@ class DatabaseRepository {
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllGroups() {
-    $queryString = "select id, name from mydb.group where tournamentId is not null";
+    $queryString = "select id, name, tournamentId from mydb.group where tournamentId is not null";
 
     $result = $this->db->query($queryString);
 
     if ($result !== FALSE) {
-      $allTeams = array();
+      $allGroups = array();
 
       foreach ($result as $r) {
-        $team = new Team();
-        $team->id = $r["Id"];
-        $team->name = $r["Name"];
-        $team->tournamentId = $r["TournamentId"];
-        $team->tournamentName = $r["TournamentName"];
-        array_push($allTeams, $team);
+        $group = new Group();
+        $group->id = $r["Id"];
+        $group->name = $r["Name"];
+        $group->tournamentId = $r["TournamentId"];
+        array_push($allGroups, $group);
       }
 
-      return $allTeams;
+      return $allGroups;
     }
     return false;
   }
