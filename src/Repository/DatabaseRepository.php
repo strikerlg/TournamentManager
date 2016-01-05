@@ -5,6 +5,7 @@ require_once "Model/Player.php";
 require_once "Model/Tournament.php";
 require_once "Model/Admin.php";
 require_once "Model/Team.php";
+require_once "Model/Group.php";
 
 class DatabaseRepository {
   private $db;

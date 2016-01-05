@@ -1,6 +1,6 @@
 <?php
 
-class Admin
+class Group
 {
     public $id;
     public $name;
