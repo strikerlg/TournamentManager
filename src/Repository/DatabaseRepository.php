@@ -6,6 +6,7 @@ require_once "Model/Tournament.php";
 require_once "Model/Admin.php";
 require_once "Model/Team.php";
 require_once "Model/Group.php";
+require_once "Model/Match.php";
 
 class DatabaseRepository {
   private $db;
@@ -30,28 +31,115 @@ class DatabaseRepository {
     return false;
   }
 
-  public function removePlayer($id) {
-    $result = $this->db->query("delete from player where id = (?)",
-                               $id);
-
-    return $result;
-  }
-
   public function updatePlayer(Player $player) {
     $result = $this->db->query("update player set teamid = (?), vorname = (?), name = (?) where id = (?)", $player->teamId, $player->name, $player->lastName, $player->id);
 
     return $result;
   }
 
+  public function removePlayer($id)
+  {
+    $result = $this->db->query("delete from player where id = (?)",
+        $id);
+
+    return $result;
+  }
+
   /**
-   * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zurï¿½ck
-   * @param $id Die ID des zu suchenden Spielers
-   * @return bool|Player Die Rückgabewert ist entweder der gefundene Spieler, oder false
-   *                        bei Auftritt eines Fehlers
+   * Fï¿½gt ein neues Turnier in der Datenbank hinzu
+   * @param Tournament $tournament Das neu hinzuzufï¿½gende Turnier
+   * @return bool Der Rï¿½ckgabewert gibt an, ob das Hinzufï¿½gen erfolgreich abgeschlossen wurde
    */
+  public function addTournament(Tournament $tournament) {
+    $result = $this->db->query("insert into Tournament (Name) values (?)",
+                               array(sqlString($tournament->name)));
+    if ($result !== false) {
+      $tournament->id = $this->db->lastInsertedID();
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Updated ein Tournament auf/in der DB
+   * @param $Id id des Tournaments $name name des Tournaments
+   * @return bool ob peration Ok
+   */
+  public function updateTournament(Tournament $tournament) {
+    $result = $this->db->query("update tournament set name = (?) where id = (?)", $tournament->name, $tournament->id);
+
+    return $result;
+  }
+
+  /**
+   * LÃ¶scht ein Tournament aus der DB
+   * @param $Id id des zu lÃ¶schenden Tournaments
+   * @return bool ob peration Ok
+   */
+  public function removeTournament($id) {
+    $result = $this->db->query("delete from tournament where id = (?)",
+                               $id);
+
+    return $result;
+  }
+
+  public function addTeam(Team $team) {
+    $result = $this->db->query("insert into team(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
+
+    return $result;
+  }
+
+  public function updateTeam(Team $team) {
+    $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?", $team->name, $team->tournamentId, $team->id);
+
+    if ($result !== false) {
+      $team->id = $this->db->lastInsertedID();
+      return true;
+    }
+
+    return false;
+  }
+
+  public function deleteTeam($id) {
+    $result = $this->db->query("delete from team where id = ?", $id);
+
+    return $result;
+  }
+
+  public function addMatch(Match $match)
+  {
+    //TODO: Die standard Werte beim hinzufügen gehören ncoh abgesprochen
+  }
+
+  public function updateMatch(Match $match)
+  {
+    $result = $this->db->query("update matchinfo set matchTime = ?, teamFirstPoints = ?, teamSecondPoints = ?, isRunning = ?, isCompleted = ?
+                                where id = ?", $match->matchTime, $match->teamFirstPoints, $match->teamSecondPoints, $match->isRunning, $match->isCompleted);
+
+    if ($result !== false) {
+      $match->id = $this->db->lastInsertedID();
+      return true;
+    }
+  }
+
+  public function deleteMatch($id)
+  {
+    // TODO: eventuell muss noch aus der zuordnungstabelle gelöscht werden
+    $result = $this->db->query("delete from matchinfo where id = ?", $id);
+
+    return $result;
+  }
+
+    /**
+     * Suche in der Datenbank nach dem Spieler mit der ID und gibe diesen zurï¿½ck
+     * @param $id Die ID des zu suchenden Spielers
+     * @return bool|Player Die Rückgabewert ist entweder der gefundene Spieler, oder false
+     *                        bei Auftritt eines Fehlers
+     */
   public function getPlayerById($id) {
     $result = $this->db->query("select player.id, player.name, player.vorname, player.teamid, mydb.team.name as 'TeamName', mydb.Group.Name as 'GroupName' from player, team, mydb.Group where player.teamid = team.id and team.tournamentid = Group.tournamentid and player.Id = ?",
-                               array(sqlInt($id)));
+        array(sqlInt($id)));
     if ($result !== false && count($result) > 0) {
       $player = new Player();
       $player->id = $result[0]["Id"];
@@ -88,68 +176,6 @@ class DatabaseRepository {
       }
 
       return $allPlayers;
-    }
-
-    return false;
-  }
-
-  /**
-   * Fï¿½gt ein neues Turnier in der Datenbank hinzu
-   * @param Tournament $tournament Das neu hinzuzufï¿½gende Turnier
-   * @return bool Der Rï¿½ckgabewert gibt an, ob das Hinzufï¿½gen erfolgreich abgeschlossen wurde
-   */
-  public function addTournament(Tournament $tournament) {
-    $result = $this->db->query("insert into Tournament (Name) values (?)",
-                               array(sqlString($tournament->name)));
-    if ($result !== false) {
-      $tournament->id = $this->db->lastInsertedID();
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
-   * LÃ¶scht ein Tournament aus der DB
-   * @param $Id id des zu lÃ¶schenden Tournaments
-   * @return bool ob peration Ok
-   */
-  public function removeTournament($id) {
-    $result = $this->db->query("delete from tournament where id = (?)",
-                               $id);
-
-    return $result;
-  }
-
-  /**
-   * Updated ein Tournament auf/in der DB
-   * @param $Id id des Tournaments $name name des Tournaments
-   * @return bool ob peration Ok
-   */
-  public function updateTournament(Tournament $tournament) {
-    $result = $this->db->query("update tournament set name = (?) where id = (?)", $tournament->name, $tournament->id);
-
-    return $result;
-  }
-
-  public function addTeam(Team $team) {
-    $result = $this->db->query("insert into team(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
-
-    return $result;
-  }
-
-  public function deleteTeam($id) {
-    $result = $this->db->query("delete from team where id = ?", $id);
-
-    return $result;
-  }
-
-  public function updateTeam(Team $team) {
-    $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?", $team->name, $team->tournamentId, $team->id);
-
-    if ($result !== false) {
-      $team->id = $this->db->lastInsertedID();
-      return true;
     }
 
     return false;
@@ -227,6 +253,48 @@ class DatabaseRepository {
       }
 
       return $allTournaments;
+    }
+
+    return false;
+  }
+
+  /**
+   * Gibt alle Matches in der Datenbank zurï¿½ck
+   * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Matches beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getAllMatches() {
+    $result = $this->db->query("select matchinfo.Id as 'id', matchinfo.GroupId as 'groupId', mydb.group.Name as 'groupName',
+                                matchinfo.TeamFirstId as 'teamFirstId', teamFirst.Name as 'teamFirstName', matchinfo.TeamFirstPoints as 'teamFirstPoints',
+                                matchinfo.TeamSecondId as 'teamSecondId', teamSecond.Name as 'teamSecondName', matchinfo.TeamSecondPoints as 'teamSecondPoints',
+                                matchinfo.MatchTime as 'matchTime', matchinfo.IsRunning as 'isRunning', matchinfo.IsCompleted as 'isCompleted'
+                                from matchinfo, mydb.group, team teamFirst, team teamSecond
+                                where matchinfo.GroupId = mydb.group.Id
+                                and matchinfo.TeamFirstId = teamFirst.Id
+                                and matchinfo.TeamSecondId = teamSecond.Id
+                                order by GroupId,Id;");
+
+    if ($result !== false) {
+      $allMatches = array();
+
+      foreach ($result as $r) {
+        $match = new Match();
+        $match->id = $r["id"];
+        $match->groupId = $r["groupId"];
+        $match->groupName = $r["groupName"];
+        $match->teamFirstId = $r["teamFirstId"];
+        $match->teamFirstName = $r["teamFirstName"];
+        $match->teamFirstPoints = $r["teamFirstPoints"];
+        $match->teamSecondId = $r["teamSecondId"];
+        $match->teamSecondName = $r["teamSecondName"];
+        $match->teamSecondPoints = $r["teamSecondPoints"];
+        $match->matchTime = $r["matchTime"];
+        $match->isRunning = $r["isRunning"];
+        $match->isCompleted = $r["isCompleted"];
+        array_push($allMatches, $match);
+      }
+
+      return $allMatches;
     }
 
     return false;

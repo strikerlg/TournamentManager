@@ -25,7 +25,7 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <table class="hidden-sm hidden-xs mf-table">
+        <table class="mf-table">
           <tr>
             <th>Gruppen Name</th>
             <th>Uhrzeit</th>
@@ -35,51 +35,45 @@
             <th class="mf-t2-header">Punke T2</th>
             <th>Läuft</th>
             <th>Fertig</th>
+            <th> </th>
           </tr>
-          <tr>
-            <td>Gruppe 1</td>
-            <td>13:20</td>
-            <td>Die Roten</td>
-            <td>Die Grünen</td>
-            <td>5</td>
-            <td>0</td>
-            <td><input type="checkbox" checked=""></td>
-            <td><input type="checkbox"></td>
-          </tr>
+          {% for match in matches %}
+          <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
+            {% if match.id %}
+            <input class="field-id" type="hidden" name="Id" value="{{ match.id }}">
+            {% endif %}
+            {{ _self.record(match.id, match.groupName, match.teamFirstName, match.teamFirstPoints, match.teamSecondName, match.teamSecondPoints, match.matchTime, match.isRunning, match.isCompleted) }}
+          </form>
+          {% endfor %}
         </table>
 
-        <table class="visible-sm visible-xs mf-table" style="width: 100%;">
-          <tr>
-            <th>Gruppen Name</th>
-            <td>Gruppe 1</td>
-          </tr>
-          <tr>
-            <th>Uhrzeit</th>
-            <td>13:20</td>
-          </tr>
-          <tr>
-            <th class="mf-t1-header">Team 1</th>
-            <td>Die Roten</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <th class="mf-t2-header">Team 2</th>
-            <td>Die Grünen</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Läuft</th>
-            <td><input type="checkbox" checked=""></td>
-          </tr>
-          <tr>
-            <th>Fertig</th>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
+        <div class="after-records clearfix">
+          <div class="col-xs-6">
+            <input class="save-all-records" type="button" value="Speichern"/>
+          </div>
+          <div class="col-xs-6">
+            <input class="add-record" type="button" value="Hinzufügen"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+{% macro record(id, groupName, teamFirstName, teamFirstPoints, teamSecondName, teamSecondPoints, matchTime, isRunning, isCompleted) %}
+    <tr>
+      <td><label>{{ groupName }}</label></td>
+      <td><input name="matchTime" type="date" value="{{ matchTime }}"></td>
+      <td><label>{{ teamFirstName }}</label></td>
+      <td><label>{{ teamSecondName }}</label></td>
+      <td><input name="teamFirstPoints" type="text" value="{{ teamFirstPoints }}"></td>
+      <td><input name="teamSecondPoints" type="text" value="{{ teamSecondPoints }}"></td>
+      <td><input name="isRunning" type="checkbox" value="{{ isRunning }}"></td>
+      <td><input name="isCompleted" type="checkbox" value="{{ isCompleted }}"></td>
+
+      <td><input class="delete-record" type="button" value="Löschen"/></td>
+    </tr>
+{% endmacro %}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
