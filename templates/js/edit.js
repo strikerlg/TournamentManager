@@ -21,9 +21,13 @@
       var table = $("body").attr("data-table");
       $formContainer = $afterRecords.parent();
 
-      saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table);
+      saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table, function(data) {
+        console.log(data);
+      });
+
       saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table,
       function(data) {
+        console.log(data);
         location.reload();
       });
     });

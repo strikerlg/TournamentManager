@@ -44,7 +44,7 @@
 
 {% macro record(id, firstname, lastname, teamId, teams, hidden = false) %}
 <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
-  {% if id %}
+  {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 

@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/edit.css') }}">
 </head>
-<body data-table="Group">
+<body data-table="MatchInfo">
 {% include "partials/mobile_nav.html" %}
 
 <div class="mf-page-wrap">
@@ -25,27 +25,10 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <table class="mf-table">
-          <tr>
-            <th>Gruppen Name</th>
-            <th>Uhrzeit</th>
-            <th>Team 1</th>
-            <th>Team 2</th>
-            <th class="mf-t1-header">Punke T1</th>
-            <th class="mf-t2-header">Punke T2</th>
-            <th>Läuft</th>
-            <th>Fertig</th>
-            <th> </th>
-          </tr>
-          {% for match in matches %}
-          <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
-            {% if match.id %}
-            <input class="field-id" type="hidden" name="Id" value="{{ match.id }}">
-            {% endif %}
-            {{ _self.record(match.id, match.groupName, match.teamFirstName, match.teamFirstPoints, match.teamSecondName, match.teamSecondPoints, match.matchTime, match.isRunning, match.isCompleted) }}
-          </form>
-          {% endfor %}
-        </table>
+        {% for match in matches %}
+        {{ _self.record(match.id, match.groupId, match.groupName, match.teamFirstName, match.teamFirstPoints, match.teamSecondName,
+        match.teamSecondPoints, match.matchTime, match.isRunning, match.isCompleted, null, false) }}
+        {% endfor %}
 
         <div class="after-records clearfix">
           <div class="col-xs-6">
@@ -60,12 +43,33 @@
   </div>
 </div>
 
-{% macro record(id, groupName, teamFirstName, teamFirstPoints, teamSecondName, teamSecondPoints, matchTime, isRunning, isCompleted) %}
+{% macro record(id, groupId, groupName, teamFirstName, teamFirstPoints, teamSecondName, teamSecondPoints, matchTime, isRunning,
+isCompleted, gruppen, hidden = false) %}
+<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
+  {% if id is not null %}
+  <input class="field-id" type="hidden" name="Id" value="{{ id }}">
+  {% endif %}
+
+  <table class="mf-table">
     <tr>
-      <td><label>{{ groupName }}</label></td>
-      <td><input name="matchTime" type="date" value="{{ matchTime }}"></td>
-      <td><label>{{ teamFirstName }}</label></td>
-      <td><label>{{ teamSecondName }}</label></td>
+      <th><label>{% if groupId %}{{ groupName }}{% else %}Gruppe{% endif %}</label></th>
+      <th><label>Spielzeizeit</label></th>
+      <th><label>{{ teamFirstName }} Punkte</label></th>
+      <th><label>{{ teamSecondName }} Punkte</label></th>
+      <th>Läuft</th>
+      <th>Beendet</th>
+    </tr>
+    <tr>
+      <td>
+        {% if not groupId %}
+        <select name="GroupId">
+          {% for gruppe in gruppen %}
+          <option value="{{gruppe.id}}">{{gruppe.Name}}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+      </td>
+      <td><input name="matchTime" type="time" value="{{ matchTime }}"></td>
       <td><input name="teamFirstPoints" type="text" value="{{ teamFirstPoints }}"></td>
       <td><input name="teamSecondPoints" type="text" value="{{ teamSecondPoints }}"></td>
       <td><input name="isRunning" type="checkbox" value="{{ isRunning }}"></td>
@@ -73,9 +77,14 @@
 
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
+  </table>
+</form>
 {% endmacro %}
+
+{{ _self.record(null, null, '', 'Team #1', '0', 'Team #2', '0', '00:00', false, false, gruppen, true) }}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/edit.js') }}"></script>
 </body>
 </html>
