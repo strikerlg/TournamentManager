@@ -128,6 +128,9 @@ class TManager
         $teams = $this->dbRepo->getAllTeams();
         $this->authorizedPage("spieler.html", array_merge($commonArgs, array("players" => $players, "teams" => $teams)));
         break;
+      case "gruppe_has_teams":
+        echo "allahu akbar";
+        break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
     }
