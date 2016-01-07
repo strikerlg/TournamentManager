@@ -36,7 +36,7 @@ class TManager
     Twig_Autoloader::register();
     $loader = $GLOBALS["TWIG_LOADER"] = new Twig_Loader_Filesystem("templates");
     $cache = DEV_MODE === "debug" ? false : "cache";
-    $twig = $GLOBALS["TWIG"] = new Twig_Environment($loader, array("cache" => $cache));
+    $twig = $GLOBALS["TWIG"] = new Twig_Environment($loader, array("cache" => $cache, "debug" => true));
 
     $assetFunc = new Twig_SimpleFunction("asset", function($assetPath)
     {
@@ -129,7 +129,16 @@ class TManager
         $this->authorizedPage("spieler.html", array_merge($commonArgs, array("players" => $players, "teams" => $teams)));
         break;
       case "gruppe_has_teams":
-        echo "allahu akbar";
+        $groupId = isset($_GET["GroupId"]) ? $_GET["GroupId"] : null;
+        d($_GET);
+        d($groupId);
+        if ($groupId === null) {
+          $this->handlePage("gruppen");
+        }
+        else {
+          $group = $this->dbRepo->getGroupWithId($groupId);
+          $this->authorizedPage("gruppe_has_teams.html", array_merge($commonArgs, array("group" => $group)));
+        }
         break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));

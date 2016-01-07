@@ -238,6 +238,21 @@ class DatabaseRepository {
     return false;
   }
 
+  public function getGroupWithId($id) {
+    $queryString = "select * from mydb.Group where Id = ?";
+    $result = $this->db->query($queryString);
+
+    if ($result === false) {
+      return false;
+    }
+
+    $group = new Group();
+    $group->id = $result["Id"];
+    $group->name = $result["Name"];
+    $group->tournamentId = $result["TurnamentId"];
+    return $group;
+  }
+
   /**
    * Gibt alle Turniere in der Datenbank zurï¿½ck
    * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Turniere beinhaltet,
