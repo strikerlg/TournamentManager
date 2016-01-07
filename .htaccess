@@ -8,4 +8,8 @@ RewriteRule ^templates/(.+)$ templates/$1 [L]
 
 # URL-Rewriting für "/admin" -> "/index.php?page=admin"
 RewriteRule ^index.php$ index.php [L]
+
+RewriteCond %{QUERY_STRING} ^(.+)$
+RewriteRule ^(.+)$ index.php?page=$1&%1 [L]
+
 RewriteRule ^(.+)$ index.php?page=$1 [L]
