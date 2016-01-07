@@ -109,6 +109,9 @@ class DatabaseRepository {
 
   public function addMatch(Match $match)
   {
+    $result = $this->db->query("insert into group(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
+
+    return $result;
     //TODO: Die standard Werte beim hinzufügen gehören ncoh abgesprochen
   }
 

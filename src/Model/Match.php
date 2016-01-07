@@ -1,6 +1,6 @@
 <?php
 
-class match
+class Match
 {
     public $id;
     public $groupId;

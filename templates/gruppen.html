@@ -25,8 +25,8 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        {% for match in matches %}
-        {{ _self.record(team.id, team.name, team.tournamentId, turniere) }}
+        {% for group in groups %}
+        {{ _self.record(group.id, group.name, group.tournamentId, turniere) }}
         {% endfor %}
 
         <div class="after-records clearfix">
