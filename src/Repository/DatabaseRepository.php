@@ -214,7 +214,7 @@ class DatabaseRepository {
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllGroups() {
-    $queryString = "select id, name, tournamentId from mydb.Group where tournamentId is not null";
+    $queryString = "select Id, Name, TournamentId from mydb.Group where TournamentId is not null";
 
     $result = $this->db->query($queryString);
 
@@ -226,11 +226,12 @@ class DatabaseRepository {
         $group->id = $r["Id"];
         $group->name = $r["Name"];
         $group->tournamentId = $r["TournamentId"];
-        array_push($allGroups, $group);
+        $allGroups[] = $group;
       }
 
       return $allGroups;
     }
+
     return false;
   }
 

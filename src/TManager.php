@@ -107,7 +107,7 @@ class TManager
       case "gruppen":
         $groups = $this->dbRepo->getAllGroups();
         $turniere = $this->dbRepo->getAllTournaments();
-        $this->authorizedPage("gruppen.html", array_merge($commonArgs, array("turniere" => $turniere, "teams" => $groups)));
+        $this->authorizedPage("gruppen.html", array_merge($commonArgs, array("turniere" => $turniere, "groups" => $groups)));
         break;
       case "matches":
         $matches = $this->dbRepo->getAllMatches();
@@ -127,6 +127,9 @@ class TManager
         $players = $this->dbRepo->getAllPlayers();
         $teams = $this->dbRepo->getAllTeams();
         $this->authorizedPage("spieler.html", array_merge($commonArgs, array("players" => $players, "teams" => $teams)));
+        break;
+      case "gruppe_has_teams":
+        echo "allahu akbar";
         break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));

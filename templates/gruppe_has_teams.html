@@ -8,14 +8,14 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/edit.css') }}">
 </head>
-<body data-table="mydb.Group">
+<body data-table="Tournament">
 {% include "partials/mobile_nav.html" %}
 
 <div class="mf-page-wrap">
   <div class="mf-page mf-container">
     {% include "partials/page_header.html" %}
 
-    <div class="mf-section-separator">Gruppen</div>
+    <div class="mf-section-separator">Turniere</div>
 
     <div class="mf-section">
       <div class="mf-section-headline">
@@ -25,8 +25,8 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        {% for group in groups %}
-        {{ _self.record(group.id, group.name, group.tournamentId, turniere) }}
+        {% for turnier in turniere %}
+          {{ _self.record(turnier.id, turnier.name) }}
         {% endfor %}
 
         <div class="after-records clearfix">
@@ -42,7 +42,7 @@
   </div>
 </div>
 
-{% macro record(id, name, tournamentId, turniere, hidden = false) %}
+{% macro record(id, name, hidden = false) %}
 <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
   {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
@@ -52,24 +52,13 @@
     <tr>
       <th><label>Name</label></th>
       <td><input name="Name" type="text" value="{{ name }}"></td>
-      <td><label>Turnier</label></td>
-      <td>
-        <select name="TournamentId">
-        {% for turnier in turniere %}
-          <option value="{{ turnier.id }}" {{ turnier.id == tournamentId ? "selected" : "" }}>{{ turnier.name }}</option>
-        {% endfor %}
-        </select>
-      </td>
-      {% if id is not null %}
-      <td><a href="/gruppe_has_teams?GruppenId={{ id }}"><input type="button" value="Teams zuweisen"/></a></td>
-      {% endif %}
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
   </table>
 </form>
 {% endmacro %}
 
-{{ _self.record(null, '', null, turniere, true) }}
+{{ _self.record(null, '', true) }}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
