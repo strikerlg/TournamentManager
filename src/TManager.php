@@ -36,14 +36,19 @@ class TManager
     Twig_Autoloader::register();
     $loader = $GLOBALS["TWIG_LOADER"] = new Twig_Loader_Filesystem("templates");
     $cache = DEV_MODE === "debug" ? false : "cache";
-    $twig = $GLOBALS["TWIG"] = new Twig_Environment($loader, array("cache" => $cache, "debug" => true));
+    $twig = $GLOBALS["TWIG"] = new Twig_Environment($loader, array("cache" => $cache));
 
     $assetFunc = new Twig_SimpleFunction("asset", function($assetPath)
     {
       return "/templates/" . $assetPath;
     });
 
+    $dumpFunc = new Twig_SimpleFunction("dump", function($obj) {
+      d($obj);
+    });
+
     $twig->addFunction($assetFunc);
+    $twig->addFunction($dumpFunc);
     return $twig;
   }
 
