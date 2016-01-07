@@ -21,14 +21,25 @@
       var table = $("body").attr("data-table");
       $formContainer = $afterRecords.parent();
 
+      var insertFinished = false, updateFinished = false;
+
       saveAllForms(allInsertForms($formContainer), HANDLER_URL, "saveAll", table, function(data) {
+        insertFinished = true;
         console.log(data);
+
+        if (insertFinished && updateFinished) {
+          location.reload();
+        }
       });
 
       saveAllForms(allUpdateForms($formContainer), HANDLER_URL, "updateAll", table,
       function(data) {
+        updateFinished = true;
         console.log(data);
-        location.reload();
+
+        if (insertFinished && updateFinished) {
+          location.reload();
+        }
       });
     });
   });
