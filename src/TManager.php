@@ -117,7 +117,8 @@ class TManager
       case "matches":
         $matches = $this->dbRepo->getAllMatches();
         $groups = $this->dbRepo->getAllGroups();
-        $this->authorizedPage("matches.html", array_merge($commonArgs, array("matches" => $matches, "gruppen" => $groups)));
+        $teams = $this->dbRepo->getAllTeams();
+        $this->authorizedPage("matches.html", array_merge($commonArgs, array("matches" => $matches, "gruppen" => $groups, "teams" => $teams)));
         break;
       case "teams":
         $teams = $this->dbRepo->getAllTeams();

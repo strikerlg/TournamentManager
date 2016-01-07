@@ -27,7 +27,7 @@
       <div class="mf-section-inner mf-container">
         {% for match in matches %}
         {{ _self.record(match.id, match.groupId, match.groupName, match.teamFirstName, match.teamFirstPoints, match.teamSecondName,
-        match.teamSecondPoints, match.matchTime, match.isRunning, match.isCompleted, null, false) }}
+        match.teamSecondPoints, match.matchTime, match.isRunning, match.isCompleted, match.teamFirstId, match.teamSecondId, gruppen, teams, false) }}
         {% endfor %}
 
         {% set noGroups = gruppen|length <= 0 %}
@@ -50,18 +50,21 @@
 </div>
 
 {% macro record(id, groupId, groupName, teamFirstName, teamFirstPoints, teamSecondName, teamSecondPoints, matchTime, isRunning,
-isCompleted, gruppen, hidden = false) %}
+isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
 <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
   {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 
+
   <table class="mf-table">
     <tr>
       <th><label>{% if groupId %}{{ groupName }}{% else %}Gruppe{% endif %}</label></th>
-      <th><label>Spielzeizeit</label></th>
-      <th><label>{{ teamFirstName }} Punkte</label></th>
-      <th><label>{{ teamSecondName }} Punkte</label></th>
+      <th><label>Spielzeit</label></th>
+      <th><label>Team 1</label></th>
+      <th><label>Team 2</label></th>
+      <th style="background-color: green"><label>{{ teamFirstName }} Punkte</label></th>
+      <th style="background-color: red"><label>{{ teamSecondName }} Punkte</label></th>
       <th>Läuft</th>
       <th>Beendet</th>
     </tr>
@@ -70,12 +73,27 @@ isCompleted, gruppen, hidden = false) %}
         {% if not groupId %}
         <select name="GroupId">
           {% for gruppe in gruppen %}
-          <option value="{{gruppe.id}}">{{gruppe.Name}}</option>
+          <option value="{{gruppe.id}}">{{gruppe.name}}</option>
           {% endfor %}
         </select>
         {% endif %}
       </td>
       <td><input name="matchTime" type="time" value="{{ matchTime }}"></td>
+      <td>
+      <select name="TeamFirstId">
+
+        {% for team in teams %}
+        <option value="{{team.id}}"{% if team.id == teamFirstId %} selected {% endif%}>{{team.name}}</option>
+        {% endfor %}
+      </select>
+        </td>
+      <td>
+      <select name="TeamSecondId">
+        {% for team in teams %}
+        <option value="{{team.id}}"{% if team.id == teamSecondId %} selected {% endif%}>{{team.name}}</option>
+        {% endfor %}
+      </select>
+      </td>
       <td><input name="teamFirstPoints" type="text" value="{{ teamFirstPoints }}"></td>
       <td><input name="teamSecondPoints" type="text" value="{{ teamSecondPoints }}"></td>
       <td><input name="isRunning" type="checkbox" value="{{ isRunning }}"></td>
@@ -87,7 +105,7 @@ isCompleted, gruppen, hidden = false) %}
 </form>
 {% endmacro %}
 
-{{ _self.record(null, null, '', 'Team #1', '0', 'Team #2', '0', '00:00', false, false, gruppen, true) }}
+{{ _self.record(null, null, '', 'Team #1', '0', 'Team #2', '0', '00:00', false, false,0,0, gruppen, teams, true) }}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
