@@ -29,12 +29,18 @@
         {{ _self.record(team.id, team.name, team.tournamentId, turniere) }}
         {% endfor %}
 
+        {% set noTurniere = turniere|length <= 0 %}
+
+        {% if noTurniere %}
+        <span class="align-center">Legen Sie bitte zuerst Turniere an</span>
+        {% endif %}
+
         <div class="after-records clearfix">
           <div class="col-xs-6">
-            <input class="save-all-records" type="button" value="Speichern"/>
+            <input class="save-all-records" type="button" value="Speichern" {% if noTurniere %}disabled{% endif %}/>
           </div>
           <div class="col-xs-6">
-            <input class="add-record" type="button" value="Hinzufügen"/>
+            <input class="add-record" type="button" value="Hinzufügen" {% if noTurniere %}disabled{% endif %}/>
           </div>
         </div>
       </div>
