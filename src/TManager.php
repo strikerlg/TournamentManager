@@ -111,7 +111,8 @@ class TManager
         break;
       case "matches":
         $matches = $this->dbRepo->getAllMatches();
-        $this->authorizedPage("matches.html", array_merge($commonArgs, array("matches" => $matches)));
+        $groups = $this->dbRepo->getAllGroups();
+        $this->authorizedPage("matches.html", array_merge($commonArgs, array("matches" => $matches, "gruppen" => $groups)));
         break;
       case "teams":
         $teams = $this->dbRepo->getAllTeams();
@@ -240,7 +241,7 @@ class TManager
     }
 
     $queryString = "insert into $table $values values " . implode(", ", $data);
-    //echo $queryString . "<br>";
+    echo $queryString . "<br>";
     $result = $this->db->query($queryString);
   }
 
@@ -263,6 +264,7 @@ class TManager
       }
 
       $queryString = "update $table set " . implode(", ", array_map(function ($i) { return $i["name"] . '=\'' . $i["value"] . '\''; }, $sets)) . " where Id = $recordId";
+      echo $queryString . "<br>";
       $this->db->query($queryString);
     }
   }
