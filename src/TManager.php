@@ -136,8 +136,6 @@ class TManager
         break;
       case "gruppe_has_teams":
         $groupId = isset($_GET["GroupId"]) ? $_GET["GroupId"] : null;
-        d($_GET);
-        d($groupId);
         if ($groupId === null) {
           $this->handlePage("gruppen");
         }

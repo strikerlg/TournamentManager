@@ -238,18 +238,23 @@ class DatabaseRepository {
     return false;
   }
 
+  /**
+   * Gibt die Gruppe mit der angegebenen ID zurück
+   * @param $id Die ID der Gruppe
+   * @return bool|Group Die gefundene Gruppe, false bei Fehler
+   */
   public function getGroupWithId($id) {
     $queryString = "select * from mydb.Group where Id = ?";
-    $result = $this->db->query($queryString);
+    $result = $this->db->query($queryString, array(sqlInt($id)));
 
-    if ($result === false) {
+    if ($result === false || count($result) <= 0) {
       return false;
     }
 
     $group = new Group();
-    $group->id = $result["Id"];
-    $group->name = $result["Name"];
-    $group->tournamentId = $result["TurnamentId"];
+    $group->id = $result[0]["Id"];
+    $group->name = $result[0]["Name"];
+    $group->tournamentId = $result[0]["TournamentId"];
     return $group;
   }
 
@@ -339,6 +344,10 @@ class DatabaseRepository {
     }
 
     return false;
+  }
+
+  public function getTeamsForGroup($groupId) {
+
   }
 }
 
