@@ -141,7 +141,8 @@ class TManager
         }
         else {
           $group = $this->dbRepo->getGroupWithId($groupId);
-          $this->authorizedPage("gruppe_has_teams.html", array_merge($commonArgs, array("group" => $group)));
+          $teams = $this->dbRepo->getTeamsForGroup($groupId);
+          $this->authorizedPage("gruppe_has_teams.html", array_merge($commonArgs, array("group" => $group, "teams" => $teams)));
         }
         break;
       default:

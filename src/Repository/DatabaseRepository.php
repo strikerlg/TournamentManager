@@ -346,8 +346,36 @@ class DatabaseRepository {
     return false;
   }
 
+  /**
+   * Gibt alle Teams, die der bestimmten Gruppe zugewisen wurden, zurück
+   * @param $groupId Die ID der Gruppe
+   * @return array|bool Die Teams der Gruppe, false bei Fehler
+   */
   public function getTeamsForGroup($groupId) {
+    $queryString = "select Team.Id as 'Id', Team.Name as 'Name', Team.TournamentId as 'TournamentId',
+                      Tournament.Name as 'TournamentName'
+                      from Group_has_Team as ght
+                      join Team on Team.Id = ght.Team_Id
+                      join Tournament on Tournament.Id = Team.TournamentId
+                      where ght.Group_Id = ?";
+    $result = $this->db->query($queryString, array(sqlInt($groupId)));
 
+    if ($result === false) {
+      return false;
+    }
+
+    $teams = array();
+
+    foreach ($result as $r) {
+      $t = new Team();
+      $t->id = $r["Id"];
+      $t->name = $r["Name"];
+      $t->tournamentId = $r["TournamentId"];
+      $t->tournamentName = $r["TournamentName"];
+      $teams[] = $t;
+    }
+
+    return $teams;
   }
 }
 
