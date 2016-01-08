@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('styles/edit.css') }}">
 </head>
-<body data-table="Group_has_Teams">
+<body data-table="Group_has_Team">
 {% include "partials/mobile_nav.html" %}
 
 <div class="mf-page-wrap">
@@ -20,13 +20,13 @@
     <div class="mf-section">
       <div class="mf-section-headline">
         <div class="mf-section-headline-inner mf-container">
-          &nbsp;
+          <a href="/gruppen">Zurück zu den Gruppen</a>&nbsp;
         </div>
       </div>
 
       <div class="mf-section-inner mf-container">
         {% for team in teams %}
-          {{ _self.record(team.id, team.name) }}
+        {{ _self.record(team.id, team.groupId, team.teamId, allTeams) }}
         {% endfor %}
 
         <div class="after-records clearfix">
@@ -42,23 +42,31 @@
   </div>
 </div>
 
-{% macro record(id, name, hidden = false) %}
+{% macro record(id, groupId, teamId, allTeams, hidden = false) %}
 <form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
   {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 
+  <input type="hidden" name="Group_Id" value="{{ groupId }}">
+
   <table class="mf-table">
     <tr>
-      <th><label>Name</label></th>
-      <td><input name="Name" type="text" value="{{ name }}"></td>
+      <th><label>Team</label></th>
+      <td>
+        <select name="Team_Id">
+          {% for team in allTeams %}
+          <option value="{{ team.id }}" {% if teamId == team.id %} selected {% endif %}>{{ team.name }}</option>
+          {% endfor %}
+        </select>
+      </td>
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
   </table>
 </form>
 {% endmacro %}
 
-{{ _self.record(null, '', true) }}
+{{ _self.record(null, group.id, null, allTeams, true) }}
 
 <script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>

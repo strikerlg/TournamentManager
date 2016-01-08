@@ -141,8 +141,10 @@ class TManager
         }
         else {
           $group = $this->dbRepo->getGroupWithId($groupId);
-          $teams = $this->dbRepo->getTeamsForGroup($groupId);
-          $this->authorizedPage("gruppe_has_teams.html", array_merge($commonArgs, array("group" => $group, "teams" => $teams)));
+          $allTeams = $this->dbRepo->getAllTeamsInTournament($group->tournamentId);
+          $mappings = $this->dbRepo->getAllGroupTeamMappingsForGroup($groupId);
+          $this->authorizedPage("gruppe_has_teams.html", array_merge($commonArgs,
+            array("group" => $group, "teams" => $mappings, "allTeams" => $allTeams)));
         }
         break;
       default:

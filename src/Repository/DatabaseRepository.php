@@ -7,6 +7,7 @@ require_once "Model/Admin.php";
 require_once "Model/Team.php";
 require_once "Model/Group.php";
 require_once "Model/Match.php";
+require_once "Model/GroupTeamMapping.php";
 
 class DatabaseRepository {
   private $db;
@@ -209,6 +210,62 @@ class DatabaseRepository {
       return $allTeams;
     }
     return false;
+  }
+
+  /**
+   * Gibt alle Teams in einem bestimmten Tournament zurück
+   * @param $tournamentId Die ID des Tournaments
+   * @return bool|Team Die Treams, false bei Fehler
+   */
+  public function getAllTeamsInTournament($tournamentId) {
+    $queryString = "select Team.Id as 'Id', Team.Name as 'Name', Team.TournamentId as 'TournamentId',
+                      Tournament.Name as 'TournamentName'
+                      from Team
+                      join Tournament on Tournament.Id = Team.TournamentId
+                      where TournamentId = ?";
+    $result = $this->db->query($queryString, array(sqlInt($tournamentId)));
+
+    if ($result === false) {
+      return false;
+    }
+
+    $teams = array();
+
+    foreach ($result as $r) {
+      $t = new Team();
+      $t->id = $r["Id"];
+      $t->name = $r["Name"];
+      $t->tournamentId = $r["TournamentId"];
+      $t->tournamentName = $r["TournamentName"];
+      $teams[] = $t;
+    }
+
+    return $teams;
+  }
+
+  /**
+   * @param $groupId
+   * @return array|bool
+   */
+  public function getAllGroupTeamMappingsForGroup($groupId) {
+    $queryString = "select Id, Group_Id, Team_Id from Group_has_Team where Group_Id = ?";
+    $result = $this->db->query($queryString, array(sqlInt($groupId)));
+
+    if ($result === false) {
+      return false;
+    }
+
+    $mappings = array();
+
+    foreach ($result as $r) {
+      $m = new GroupTeamMapping();
+      $m->id = $r["Id"];
+      $m->groupId = $r["Group_Id"];
+      $m->teamId = $r["Team_Id"];
+      $mappings[] = $m;
+    }
+
+    return $mappings;
   }
 
   /**
