@@ -92,6 +92,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`MatchInfo` (
   `MatchTime` DATETIME NOT NULL,
   `IsRunning` TINYINT(1) NOT NULL,
   `IsCompleted` TINYINT(1) NOT NULL,
+  `TeamFirstAfterPoints` INT NULL,
+  `TeamSecondAfterPoints` INT NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_Match_Group1_idx` (`GroupId` ASC),
   INDEX `fk_Match_Team1_idx` (`TeamFirstId` ASC),
