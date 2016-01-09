@@ -89,6 +89,7 @@ class TManager
     switch (strtolower($pageName))
     {
       case "live":
+        $this->httpRefresh(15);
         $this->renderTemplate("live.html", array_merge($commonArgs, array()));
         break;
       case "admin":
@@ -306,5 +307,9 @@ class TManager
    */
   public function httpRedirect($url) {
     header("Location: $url");
+  }
+
+  public function httpRefresh($seconds) {
+    header("Refresh: $seconds");
   }
 }
