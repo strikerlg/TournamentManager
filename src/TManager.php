@@ -134,10 +134,13 @@ class TManager
         $teams = $this->dbRepo->getAllTeams();
         $this->authorizedPage("spieler.html", array_merge($commonArgs, array("players" => $players, "teams" => $teams)));
         break;
-      case "gruppe_has_teams":
-        $groupId = isset($_GET["GroupId"]) ? $_GET["GroupId"] : null;
+      case "teams-zuweisen":
+        $groupId = null;
+        if (isset($_GET["GroupId"]) && is_numeric($_GET["GroupId"])) {
+          $groupId = intval($_GET["GroupId"]);
+        }
         if ($groupId === null) {
-          $this->handlePage("gruppen");
+          $this->httpRedirect("/gruppen");
         }
         else {
           $group = $this->dbRepo->getGroupWithId($groupId);
@@ -295,5 +298,13 @@ class TManager
    */
   private function deleteRecord($table, $recordId) {
     $this->db->query("delete from $table where Id = ?", array(sqlInt($recordId)));
+  }
+
+  /**
+   * Den Browser des Client anweisen, die angegebene Seite anzusteuern
+   * @param $url Die anzusteuernde Seite
+   */
+  public function httpRedirect($url) {
+    header("Location: $url");
   }
 }
