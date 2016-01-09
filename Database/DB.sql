@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS `mydb`.`Tournament` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Tournament` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
+  `IsLive` TINYINT(1) NOT NULL,
   PRIMARY KEY (`Id`))
 ENGINE = InnoDB;
 
