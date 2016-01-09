@@ -59,7 +59,7 @@ isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
 
   <table class="mf-table">
     <tr>
-      <th><label>{% if groupId %}{{ groupName }}{% else %}Gruppe{% endif %}</label></th>
+      <th><label>{% if not groupId %}Gruppe{% endif %}</label></th>
       <th><label>Spielzeit</label></th>
       <th><label>Team 1</label></th>
       <th><label>Team 2</label></th>
@@ -76,6 +76,8 @@ isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
           <option value="{{gruppe.id}}">{{gruppe.name}}</option>
           {% endfor %}
         </select>
+        {% else %}
+        <label>{{ groupName }}</label>
         {% endif %}
       </td>
       <td><input name="matchTime" type="time" value="{{ matchTime }}"></td>
