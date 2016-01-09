@@ -309,6 +309,10 @@ class TManager
     header("Location: $url");
   }
 
+  /**
+   * Den Browser des Clients anweisen, die aktualle Seite nach einer bestimmten Zeit neu nachzuladen
+   * @param $seconds Die Zeit in Sekunden die gewartet wird, bis nachgeladen wird
+   */
   public function httpRefresh($seconds) {
     header("Refresh: $seconds");
   }
