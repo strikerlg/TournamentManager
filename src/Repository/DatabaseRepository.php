@@ -213,10 +213,10 @@ class DatabaseRepository {
   }
 
   /**
-   * Gibt alle Teams in einem bestimmten Tournament zurück
-   * @param $tournamentId Die ID des Tournaments
-   * @return bool|Team Die Treams, false bei Fehler
-   */
+ * Gibt alle Teams in einem bestimmten Tournament zurück
+ * @param $tournamentId Die ID des Tournaments
+ * @return bool|Team Die Treams, false bei Fehler
+ */
   public function getAllTeamsInTournament($tournamentId) {
     $queryString = "select Team.Id as 'Id', Team.Name as 'Name', Team.TournamentId as 'TournamentId',
                       Tournament.Name as 'TournamentName'
@@ -241,6 +241,72 @@ class DatabaseRepository {
     }
 
     return $teams;
+  }
+
+  public function getAllTeamsFromGroup($groupId) {
+    $queryString = "select Team.Id as 'Id', Team.Name as 'Name', Team.TournamentId as 'TournamentId',
+                      Tournament.Name as 'TournamentName'
+                      from Team
+                      join tournament on tournament.Id = team.TournamentId
+                      join group_has_team on group_has_team.Team_Id = Team.Id
+                      where group_has_team.Group_Id = ?";
+    $result = $this->db->query($queryString, array(sqlInt($groupId)));
+
+    if ($result === false) {
+      return false;
+    }
+
+    $teams = array();
+
+    foreach ($result as $r) {
+      $t = new Team();
+      $t->id = $r["Id"];
+      $t->name = $r["Name"];
+      $t->tournamentId = $r["TournamentId"];
+      $t->tournamentName = $r["TournamentName"];
+      $teams[] = $t;
+    }
+
+    return $teams;
+  }
+
+  public function getMatchesFromGroup($groupId)
+  {
+    $result = $this->db->query("select matchinfo.Id as 'id', matchinfo.GroupId as 'groupId', mydb.group.Name as 'groupName',
+                                matchinfo.TeamFirstId as 'teamFirstId', teamFirst.Name as 'teamFirstName', matchinfo.TeamFirstPoints as 'teamFirstPoints',
+                                matchinfo.TeamSecondId as 'teamSecondId', teamSecond.Name as 'teamSecondName', matchinfo.TeamSecondPoints as 'teamSecondPoints',
+                                matchinfo.MatchTime as 'matchTime', matchinfo.IsRunning as 'isRunning', matchinfo.IsCompleted as 'isCompleted'
+                                from matchinfo, mydb.group, team teamFirst, team teamSecond
+                                where matchinfo.GroupId = mydb.group.Id
+                                and matchinfo.TeamFirstId = teamFirst.Id
+                                and matchinfo.TeamSecondId = teamSecond.Id
+                                and matchinfo.GroupId = $groupId;
+                                order by GroupId,Id;");
+
+    if ($result !== false) {
+      $allMatches = array();
+
+      foreach ($result as $r) {
+        $match = new Match();
+        $match->id = $r["id"];
+        $match->groupId = $r["groupId"];
+        $match->groupName = $r["groupName"];
+        $match->teamFirstId = $r["teamFirstId"];
+        $match->teamFirstName = $r["teamFirstName"];
+        $match->teamFirstPoints = $r["teamFirstPoints"];
+        $match->teamSecondId = $r["teamSecondId"];
+        $match->teamSecondName = $r["teamSecondName"];
+        $match->teamSecondPoints = $r["teamSecondPoints"];
+        $match->matchTime = $r["matchTime"];
+        $match->isRunning = $r["isRunning"];
+        $match->isCompleted = $r["isCompleted"];
+        array_push($allMatches, $match);
+      }
+
+      return $allMatches;
+    }
+
+    return false;
   }
 
   /**
@@ -296,6 +362,33 @@ class DatabaseRepository {
   }
 
   /**
+   * Gibt alle Gruppen von der Datenbank zurï¿½ck
+   * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Gruppen beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getAllGroupsfromTournament($tournamentId) {
+    $queryString = "select Id, Name, TournamentId from mydb.Group where TournamentId = $tournamentId";
+
+    $result = $this->db->query($queryString);
+
+    if ($result !== FALSE) {
+      $allGroups = array();
+
+      foreach ($result as $r) {
+        $group = new Group();
+        $group->id = $r["Id"];
+        $group->name = $r["Name"];
+        $group->tournamentId = $r["TournamentId"];
+        $allGroups[] = $group;
+      }
+
+      return $allGroups;
+    }
+
+    return false;
+  }
+
+  /**
    * Gibt die Gruppe mit der angegebenen ID zurück
    * @param $id Die ID der Gruppe
    * @return bool|Group Die gefundene Gruppe, false bei Fehler
@@ -330,6 +423,7 @@ class DatabaseRepository {
         $tournament = new Tournament();
         $tournament->id = $r["Id"];
         $tournament->name = $r["Name"];
+        $tournament->isLive =$r["IsLive"];
         array_push($allTournaments, $tournament);
       }
 
@@ -376,6 +470,27 @@ class DatabaseRepository {
       }
 
       return $allMatches;
+    }
+
+    return false;
+  }
+
+  public function getAllActiveTournaments()
+  {
+    $result = $this->db->query("SELECT * FROM Tournament WHERE IsLive = 1");
+
+    if ($result !== false) {
+      $allTournaments = array();
+
+      foreach ($result as $r) {
+        $tournament = new Tournament();
+        $tournament->id = $r["Id"];
+        $tournament->name = $r["Name"];
+        $tournament->isLive =$r["IsLive"];
+        array_push($allTournaments, $tournament);
+      }
+
+      return $allTournaments;
     }
 
     return false;

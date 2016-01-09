@@ -20,9 +20,66 @@ class LiveController
         session_start();
     }
 
-    function GetData()
+    public function GetData($activeTournamentId)
     {
-        $arr = array();
-        json_encode($arr);
+        $groups = $this->dbRepo->getAllGroupsfromTournament($activeTournamentId);
+        $currentMatch = new Match();
+        $nextmatch = new Match();
+        foreach($groups as $group)
+        {
+            $group->teams = $this->dbRepo->getAllTeamsFromGroup($group->id);
+
+            foreach($group->teams as $team)
+            {
+                $team->matchPoints = $this->calcMatchPointsOfTeam($group->id, $team->id);
+            }
+        }
+
+        $arrToReturn = array(TeamMatchPoints => $groups, currentMatch => $currentMatch, nextmatch => $nextmatch);
+
+        json_encode($arrToReturn);
+    }
+
+    private function calcMatchPointsOfTeam($groupId, $teamId)
+    {
+        $teamAllMatchPoints = 0;
+        $matches = $this->dbRepo->getMatchesFromGroup($groupId);
+
+        foreach($matches as $i => $match)
+        {
+            if($match->teamFirstId !== $teamId && $match->teamSecondId !== $teamId)
+            {
+                unset($match[$i]);
+            }
+        }
+
+        foreach($matches as $match)
+        {
+            $searchedTeamPoints = 0;
+            $otherTeamPoints = 0;
+
+            if($match->teamFirstId === $teamId)
+            {
+                $searchedTeamPoints = $match->teamFirstPoints;
+                $otherTeamPoints = $match->teamSecondPoints;
+            }
+            else
+            {
+                $searchedTeamPoints = $match->teamSecondPoints;
+                $otherTeamPoints = $match->teamFirstPoints;
+            }
+
+            if($searchedTeamPoints > $otherTeamPoints)
+            {
+                $teamAllMatchPoints = $teamAllMatchPoints + 2;
+            }
+            else if($searchedTeamPoints === $otherTeamPoints)
+            {
+                $teamAllMatchPoints = $teamAllMatchPoints + 1;
+            }
+        }
+
+        return $teamAllMatchPoints;
+
     }
 }
