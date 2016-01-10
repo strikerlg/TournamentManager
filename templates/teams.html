@@ -25,6 +25,14 @@
       </div>
 
       <div class="mf-section-inner mf-container">
+        <div class="mf-mobile-container">
+          <div class="row">
+            <div class="col-xs-4"><label>Name</label></div>
+            <div class="col-xs-4"><label>Turnier</label></div>
+            <div class="col-xs-4"><label></label></div>
+          </div>
+        </div>
+
         {% for team in teams %}
         {{ _self.record(team.id, team.name, team.tournamentId, turniere) }}
         {% endfor %}
@@ -35,12 +43,14 @@
         <span class="align-center">Legen Sie bitte zuerst Turniere an</span>
         {% endif %}
 
-        <div class="after-records clearfix">
-          <div class="col-xs-6">
-            <input class="save-all-records" type="button" value="Speichern" {% if noTurniere %}disabled{% endif %}/>
-          </div>
-          <div class="col-xs-6">
-            <input class="add-record" type="button" value="Hinzufügen" {% if noTurniere %}disabled{% endif %}/>
+        <div class="after-records mf-mobile-container">
+          <div class="row">
+            <div class="col-xs-6 mf-leftcol">
+              <input class="save-all-records" type="button" value="Speichern" {% if noTurniere %}disabled{% endif %}/>
+            </div>
+            <div class="col-xs-6 mf-rightcol">
+              <input class="add-record" type="button" value="Hinzufügen" {% if noTurniere %}disabled{% endif %}/>
+            </div>
           </div>
         </div>
       </div>
@@ -54,21 +64,19 @@
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 
-  <table class="mf-table">
-    <tr>
-      <th><label>Name</label></th>
-      <td><input name="Name" type="text" value="{{ name }}"></td>
-      <td><label>Turnier</label></td>
-      <td>
-        <select name="TournamentId">
-        {% for turnier in turniere %}
+  <div class="mf-mobile-container">
+    <div class="row">
+      <div class="col-xs-4"><input class="form-control" name="Name" type="text" value="{{ name }}"></div>
+      <div class="col-xs-4">
+        <select class="form-control" name="TournamentId">
+          {% for turnier in turniere %}
           <option value="{{ turnier.id }}" {{ turnier.id == tournamentId ? "selected" : "" }}>{{ turnier.name }}</option>
-        {% endfor %}
+          {% endfor %}
         </select>
-      </td>
-      <td><input class="delete-record" type="button" value="Löschen"/></td>
-    </tr>
-  </table>
+      </div>
+      <div class="col-xs-4"><input class="delete-record form-control" type="button" value="Löschen"/></div>
+    </div>
+  </div>
 </form>
 {% endmacro %}
 

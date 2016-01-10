@@ -25,6 +25,14 @@
       </div>
 
       <div class="mf-section-inner mf-container">
+        <div class="mf-mobile-container">
+          <div class="row">
+            <div class="col-xs-4"><label>Name</label></div>
+            <div class="col-xs-4"><label>Live</label></div>
+            <div class="col-xs-4"><label></label></div>
+          </div>
+        </div>
+
         {% for turnier in turniere %}
           {{ _self.record(turnier.id, turnier.name, turnier.isLive) }}
         {% endfor %}
@@ -49,14 +57,6 @@
   {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
-
-  <div class="mf-mobile-container">
-    <div class="row">
-      <div class="col-xs-4"><label>Name</label></div>
-      <div class="col-xs-4"><label>Live</label></div>
-      <div class="col-xs-4"><label></label></div>
-    </div>
-  </div>
 
   <div class="mf-mobile-container">
     <div class="row">
