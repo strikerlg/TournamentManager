@@ -31,7 +31,7 @@ class LiveController
             }
         }
 
-        $arrToReturn = array(TeamMatchPoints => $groups, currentMatch => $currentMatch, nextmatch => $nextmatch);
+        $arrToReturn = array('TeamMatchPoints' => $groups, 'currentMatch' => $currentMatch, 'nextmatch' => $nextmatch);
 
         json_encode($arrToReturn);
     }

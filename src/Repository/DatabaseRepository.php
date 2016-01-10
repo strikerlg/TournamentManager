@@ -110,10 +110,10 @@ class DatabaseRepository {
 
   public function addMatch(Match $match)
   {
-    $result = $this->db->query("insert into group(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
+    $result = $this->db->query("insert into matchinfo(GroupId, TeamFirstId, TeamSecondId, TeamFirstPoints, TeamSecondPoints, MatchTime, IsRunning, IsCompleted) values(?,?,?,?,?,?,?,?)",
+                              $match->groupId, $match->teamFirstId, $match->teamSecondId, $match->teamFirstPoints, $match->teamSecondPoints, $match->matchTime, $match->isRunning, $match->isCompleted);
 
     return $result;
-    //TODO: Die standard Werte beim hinzufügen gehören ncoh abgesprochen
   }
 
   public function updateMatch(Match $match)

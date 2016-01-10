@@ -213,8 +213,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Group_has_Team` (
   PRIMARY KEY (`Id`),
   INDEX `fk_Group_has_Team_Team1_idx` (`Team_Id` ASC),
   INDEX `fk_Group_has_Team_Group1_idx` (`Group_Id` ASC),
-  UNIQUE INDEX `Group_Id_UNIQUE` (`Group_Id` ASC),
-  UNIQUE INDEX `Team_Id_UNIQUE` (`Team_Id` ASC),
   CONSTRAINT `fk_Group_has_Team_Group1`
     FOREIGN KEY (`Group_Id`)
     REFERENCES `mydb`.`Group` (`Id`)

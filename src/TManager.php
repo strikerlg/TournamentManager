@@ -164,6 +164,27 @@ class TManager
             $this->httpRedirect("/gruppen");
           }
 
+          $teams = $this->dbRepo->getAllTeamsFromGroup($groupId);
+
+          for($i = 0; $i < count($teams); $i++)
+          {
+            for($j = $i + 1; $j < count($teams); $j++)
+            {
+              $matchNew = new Match();
+              $matchNew->teamFirstId = $teams[$i];
+              $matchNew->teamSecondId = $teams[$j];
+              $matchNew->teamFirstPoints = 0;
+              $matchNew->teamSecondPoints = 0;
+              $matchNew->isRunning = 0;
+              $matchNew->isCompleted = 0;
+              $matchNew->groupId = $groupId;
+              $matchNew->matchTime = date('Y-m-d H:i:s');
+
+              $this->dbRepo->addMatch($matchNew);
+            }
+          }
+
+
           echo "Jetzt sollte ich die Matches der Gruppe $groupId berechnen, oder so.";
           //$this->httpRedirect("/gruppen");
         }
