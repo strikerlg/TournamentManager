@@ -142,17 +142,22 @@ input {
 .mf-section-inner {
   padding-top: 20px;
   padding-bottom: 20px;
-  text-align: center;
-}
-
-.mf-section-inner label {
   color: #fff;
+  text-align: center;
 }
 
 /*===--------------- Input fields ---------------===*/
 
 select {
   color: #333;
+}
+
+.mf-date {
+  color: #333;
+}
+
+input[type=text] {
+  width: 100%;
 }
 
 /*===--------------- Media Queries ---------------===*/

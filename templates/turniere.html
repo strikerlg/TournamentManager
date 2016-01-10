@@ -48,7 +48,23 @@
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 
-  <table class="mf-table">
+  <div class="clearfix">
+    <div class="row">
+      <div class="col-xs-4"><label>Name</label></div>
+      <div class="col-xs-4"><label>Live</label></div>
+      <div class="col-xs-4"><label></label></div>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="row">
+      <div class="col-xs-4"><input class="form-control" name="Name" type="text" value="{{ name }}"></div>
+      <div class="col-xs-4"><input class="form-control" name="IsLive" type="checkbox" value="1" {% if isLive %} checked {% endif %}></div>
+      <div class="col-xs-4"><input class="form-control delete-record" type="button" value="Löschen"/></div>
+    </div>
+  </div>
+
+  <!--<table class="mf-table">
     <tr>
       <th><label>Name</label></th>
       <td><input name="Name" type="text" value="{{ name }}"></td>
@@ -58,7 +74,7 @@
       </td>
       <td><input class="delete-record" type="button" value="Löschen"/></td>
     </tr>
-  </table>
+  </table>-->
 </form>
 {% endmacro %}
 
