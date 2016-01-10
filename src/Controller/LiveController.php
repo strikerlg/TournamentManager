@@ -19,9 +19,8 @@ class LiveController {
     $data = array();
 
     foreach ($tournaments as $t) {
-      //$data[$t->name] = $this->getTournamentData($t->id);
       $data[$t->name] = array("running" => $this->dbRepo->getAllRunningMatchesForTournament($t->id),
-        "completed" => $this->dbRepo->getAllCompletedMatchesForTournament($t->id));
+        "completed" => $this->dbRepo->getAllCompletedMatchesForTournament($t->id), "TournamentMatchPoints" => $this->getTournamentData($t->id));
     }
 
     return $data;
@@ -40,8 +39,7 @@ class LiveController {
       }
     }
 
-    $arrToReturn = array('TeamMatchPoints' => $groups);
-    return $arrToReturn;
+    return $groups;
   }
 
   private function calcMatchPointsOfTeam($groupId, $teamId) {
@@ -50,7 +48,7 @@ class LiveController {
 
     foreach ($matches as $i => $match) {
       if ($match->teamFirstId !== $teamId && $match->teamSecondId !== $teamId) {
-        unset($match[$i]);
+        unset($matches[$i]);
       }
     }
 
