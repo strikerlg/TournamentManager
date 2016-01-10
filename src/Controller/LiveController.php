@@ -9,18 +9,14 @@ require_once "Repository/DatabaseRepository.php";
 
 class LiveController
 {
-    private $db;
     private $dbRepo;
 
-    public function __construct()
+    public function __construct(DatabaseRepository $dbRepo)
     {
-        $this->db = $this->initDatabase();
-        $this->dbRepo = new DatabaseRepository($this->db);
-
-        session_start();
+        $this->dbRepo = $dbRepo;
     }
 
-    public function GetData($activeTournamentId)
+    public function getData($activeTournamentId)
     {
         $groups = $this->dbRepo->getAllGroupsfromTournament($activeTournamentId);
         $currentMatch = new Match();
@@ -45,7 +41,7 @@ class LiveController
         $teamAllMatchPoints = 0;
         $matches = $this->dbRepo->getMatchesFromGroup($groupId);
 
-        foreach($matches as $i => $match)
+        foreach ($matches as $i => $match)
         {
             if($match->teamFirstId !== $teamId && $match->teamSecondId !== $teamId)
             {
@@ -53,7 +49,7 @@ class LiveController
             }
         }
 
-        foreach($matches as $match)
+        foreach ($matches as $match)
         {
             $searchedTeamPoints = 0;
             $otherTeamPoints = 0;

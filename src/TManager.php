@@ -3,6 +3,7 @@
 require_once "Twig/Autoloader.php";
 require_once "Repository/Database.php";
 require_once "Repository/DatabaseRepository.php";
+require_once "Controller/LiveController.php";
 
 /**
  * Class TManager - Hauptklasse der TournamentManager Website.
@@ -90,6 +91,8 @@ class TManager
     {
       case "live":
         $this->httpRefresh(15);
+        $uFuckinWotM8 = new LiveController($this->dbRepo);
+        d($uFuckinWotM8->getData(1));
         $this->renderTemplate("live.html", array_merge($commonArgs, array()));
         break;
       case "admin":
