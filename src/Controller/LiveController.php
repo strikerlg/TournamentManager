@@ -28,14 +28,13 @@ class LiveController {
 
   private function getTournamentData($activeTournamentId) {
     $groups = $this->dbRepo->getAllGroupsForTournament($activeTournamentId);
-    $currentMatch = new Match();
-    $nextmatch = new Match();
 
     foreach ($groups as $group) {
       $group->teams = $this->dbRepo->getAllTeamsForGroup($group->id);
 
       foreach ($group->teams as $team) {
         $team->matchPoints = $this->calcMatchPointsOfTeam($group->id, $team->id);
+        $team->groupName = $group->name;
       }
     }
 

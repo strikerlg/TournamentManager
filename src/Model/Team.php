@@ -7,4 +7,5 @@ class Team
   public $tournamentId;
   public $tournamentName;
   public $matchPoints; //nur für Live-Ansicht
+  public $groupName; // nur für Live-Ansicht
 }

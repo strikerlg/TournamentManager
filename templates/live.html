@@ -25,7 +25,9 @@
       </div>
 
       <div class="mf-section-inner mf-container">
-        <table>
+        <div class="hidden-sm hidden-xs clearfix">
+          <div class ="col-md-8">
+        <table class="table" >
           <tr>
             <th>Gruppe</th>
             <th>Team</th>
@@ -35,7 +37,7 @@
           {% for group in tournament.TournamentMatchPoints %}
           {% for team in group.teams %}
           <tr>
-            <td></td>
+            <td>{{ team.groupName }}</td>
             <td>{{ team.name }}</td>
             <td>{{ team.matchPoints }}</td>
           </tr>
@@ -43,6 +45,8 @@
           {% endfor %}
         </table>
       </div>
+          </div>
+        </div>
     </div>
 
     <div class="mf-section-separator">{{ tournamentName }} Ergebnisse</div>
