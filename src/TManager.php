@@ -183,9 +183,7 @@ class TManager
             }
           }
 
-
-          echo "Jetzt sollte ich die Matches der Gruppe $groupId berechnen, oder so.";
-          //$this->httpRedirect("/gruppen");
+          $this->httpRedirect("/gruppen");
         }
         break;
       default:
