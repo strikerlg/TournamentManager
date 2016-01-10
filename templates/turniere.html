@@ -29,12 +29,14 @@
           {{ _self.record(turnier.id, turnier.name, turnier.isLive) }}
         {% endfor %}
 
-        <div class="after-records clearfix">
-          <div class="col-xs-6">
-            <input class="save-all-records" type="button" value="Speichern"/>
-          </div>
-          <div class="col-xs-6">
-            <input class="add-record" type="button" value="Hinzufügen"/>
+        <div class="after-records mf-mobile-container">
+          <div class="row">
+            <div class="col-xs-6 mf-leftcol">
+              <input class="save-all-records" type="button" value="Speichern"/>
+            </div>
+            <div class="col-xs-6 mf-rightcol">
+              <input class="add-record" type="button" value="Hinzufügen"/>
+            </div>
           </div>
         </div>
       </div>
@@ -48,7 +50,7 @@
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
 
-  <div class="clearfix">
+  <div class="mf-mobile-container">
     <div class="row">
       <div class="col-xs-4"><label>Name</label></div>
       <div class="col-xs-4"><label>Live</label></div>
@@ -56,25 +58,13 @@
     </div>
   </div>
 
-  <div class="clearfix">
+  <div class="mf-mobile-container">
     <div class="row">
       <div class="col-xs-4"><input class="form-control" name="Name" type="text" value="{{ name }}"></div>
       <div class="col-xs-4"><input class="form-control" name="IsLive" type="checkbox" value="1" {% if isLive %} checked {% endif %}></div>
       <div class="col-xs-4"><input class="form-control delete-record" type="button" value="Löschen"/></div>
     </div>
   </div>
-
-  <!--<table class="mf-table">
-    <tr>
-      <th><label>Name</label></th>
-      <td><input name="Name" type="text" value="{{ name }}"></td>
-      <td>
-        <input name="IsLive" type="checkbox" value="1" {% if isLive %} checked {% endif %}>
-        <label>Live</label>
-      </td>
-      <td><input class="delete-record" type="button" value="Löschen"/></td>
-    </tr>
-  </table>-->
 </form>
 {% endmacro %}
 

@@ -14,15 +14,17 @@
   <div class="mf-page mf-container">
     {% include "partials/page_header.html" %}
 
-    {{ dump(liveData) }}
-
-
-
     {% for tournamentName, tournament in liveData %}
 
     <div class="mf-section-separator">Punktetabelle</div>
-    <div class="mf-section-headline">
-      <div class="mf-section-headline-inner mf-container">
+    <div class="mf-section">
+      <div class="mf-section-headline">
+        <div class="mf-section-headline-inner mf-container">
+          &nbsp;
+        </div>
+      </div>
+
+      <div class="mf-section-inner mf-container">
         <table>
           <tr>
             <th>Gruppe</th>
@@ -30,17 +32,15 @@
             <th>Match Punkte</th>
           </tr>
 
-          {{ dump(tournament) }}
-
-          {% for group in tournament.TournamentMatchPoints  %}
-            {% for team in group.teams %}
-              <tr>
-                <td> </td>
-                <td>{{ team.name }}</td>
-                <td>{{ team.matchPoints }}</td>
-              </tr>
-            {% endfor %}
-          [% endfor %}
+          {% for group in tournament.TournamentMatchPoints %}
+          {% for team in group.teams %}
+          <tr>
+            <td></td>
+            <td>{{ team.name }}</td>
+            <td>{{ team.matchPoints }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
         </table>
       </div>
     </div>

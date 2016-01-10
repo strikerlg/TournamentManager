@@ -34,6 +34,10 @@ input {
   margin: 0;
 }
 
+.mf-mobile-container {
+  margin: 0 30px;
+}
+
 .mf-page-header {
   background-color: rgb(79, 129, 189);
 }
@@ -144,6 +148,18 @@ input {
   padding-bottom: 20px;
   color: #fff;
   text-align: center;
+}
+
+.after-records {
+  margin-top: 20px;
+}
+
+.after-records .mf-leftcol {
+  text-align: left;
+}
+
+.after-records .mf-rightcol {
+  text-align: right;
 }
 
 /*===--------------- Input fields ---------------===*/
