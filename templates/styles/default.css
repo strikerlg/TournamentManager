@@ -142,8 +142,11 @@ input {
 .mf-section-inner {
   padding-top: 20px;
   padding-bottom: 20px;
-  color: #fff;
   text-align: center;
+}
+
+.mf-section-inner label {
+  color: #fff;
 }
 
 /*===--------------- Input fields ---------------===*/
