@@ -33,15 +33,15 @@ class DatabaseRepository {
   }
 
   public function updatePlayer(Player $player) {
-    $result = $this->db->query("update player set teamid = (?), vorname = (?), name = (?) where id = (?)", $player->teamId, $player->name, $player->lastName, $player->id);
+    $result = $this->db->query("update player set teamid = (?), vorname = (?), name = (?) where id = (?)",
+                               array(sqlInt($player->teamId), sqlString($player->name), sqlString($player->lastName), sqlInt($player->id)));
 
     return $result;
   }
 
   public function removePlayer($id)
   {
-    $result = $this->db->query("delete from player where id = (?)",
-        $id);
+    $result = $this->db->query("delete from player where id = (?)", array(sqlInt($id)));
 
     return $result;
   }
@@ -68,7 +68,8 @@ class DatabaseRepository {
    * @return bool ob peration Ok
    */
   public function updateTournament(Tournament $tournament) {
-    $result = $this->db->query("update tournament set name = (?) where id = (?)", $tournament->name, $tournament->id);
+    $result = $this->db->query("update tournament set name = (?) where id = (?)",
+                               array(sqlString($tournament->name), sqlInt($tournament->id)));
 
     return $result;
   }
@@ -80,19 +81,21 @@ class DatabaseRepository {
    */
   public function removeTournament($id) {
     $result = $this->db->query("delete from tournament where id = (?)",
-                               $id);
+                               array(sqlInt($id)));
 
     return $result;
   }
 
   public function addTeam(Team $team) {
-    $result = $this->db->query("insert into team(name, tournamentid) values(?,?);", $team->name, $team->tournamentId);
+    $result = $this->db->query("insert into team(name, tournamentid) values(?,?);",
+                               array(sqlString($team->name), sqlInt($team->tournamentId)));
 
     return $result;
   }
 
   public function updateTeam(Team $team) {
-    $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?", $team->name, $team->tournamentId, $team->id);
+    $result = $this->db->query("update team set name = ?, tournamentid = ? where id = ?",
+                               array(sqlString($team->name), sqlInt($team->tournamentId), sqlInt($team->id)));
 
     if ($result !== false) {
       $team->id = $this->db->lastInsertedID();
@@ -103,7 +106,8 @@ class DatabaseRepository {
   }
 
   public function deleteTeam($id) {
-    $result = $this->db->query("delete from team where id = ?", $id);
+    $result = $this->db->query("delete from team where id = ?",
+                               array(sqlInt($id)));
 
     return $result;
   }
@@ -111,7 +115,7 @@ class DatabaseRepository {
   public function addMatch(Match $match)
   {
     $result = $this->db->query("insert into matchinfo(GroupId, TeamFirstId, TeamSecondId, TeamFirstPoints, TeamSecondPoints, MatchTime, IsRunning, IsCompleted) values(?,?,?,?,?,?,?,?)",
-                              $match->groupId, $match->teamFirstId, $match->teamSecondId, $match->teamFirstPoints, $match->teamSecondPoints, $match->matchTime, $match->isRunning, $match->isCompleted);
+                              array(sqlInt($match->groupId)), sqlInt($match->teamFirstId), sqlInt($match->teamSecondId), sqlInt($match->teamFirstPoints), sqlInt($match->teamSecondPoints), sqlString($match->matchTime), sqlInt($match->isRunning), sqlInt($match->isCompleted));
 
     return $result;
   }
@@ -119,7 +123,8 @@ class DatabaseRepository {
   public function updateMatch(Match $match)
   {
     $result = $this->db->query("update matchinfo set matchTime = ?, teamFirstPoints = ?, teamSecondPoints = ?, isRunning = ?, isCompleted = ?
-                                where id = ?", $match->matchTime, $match->teamFirstPoints, $match->teamSecondPoints, $match->isRunning, $match->isCompleted);
+                                where id = ?",
+                               array(sqlString($match->matchTime), sqlInt($match->teamFirstPoints), sqlInt($match->teamSecondPoints), sqlInt($match->isRunning), sqlInt($match->isCompleted)));
 
     if ($result !== false) {
       $match->id = $this->db->lastInsertedID();
@@ -130,7 +135,7 @@ class DatabaseRepository {
   public function deleteMatch($id)
   {
     // TODO: eventuell muss noch aus der zuordnungstabelle gelöscht werden
-    $result = $this->db->query("delete from matchinfo where id = ?", $id);
+    $result = $this->db->query("delete from matchinfo where id = ?", array(sqlInt($id)));
 
     return $result;
   }
@@ -280,7 +285,8 @@ class DatabaseRepository {
                                 where matchinfo.GroupId = mydb.group.Id
                                 and matchinfo.TeamFirstId = teamFirst.Id
                                 and matchinfo.TeamSecondId = teamSecond.Id
-                                and matchinfo.GroupId = $groupId;");
+                                and matchinfo.GroupId = ?;",
+                               array(sqlInt($groupId)));
 
     if ($result !== false) {
       $allMatches = array();
@@ -366,9 +372,9 @@ class DatabaseRepository {
    *                       oder false bei Auftritt eines Fehlers
    */
   public function getAllGroupsForTournament($tournamentId) {
-    $queryString = "select Id, Name, TournamentId from mydb.Group where TournamentId = $tournamentId";
+    $queryString = "select Id, Name, TournamentId from mydb.Group where TournamentId = ?";
 
-    $result = $this->db->query($queryString);
+    $result = $this->db->query($queryString, array(sqlInt($tournamentId)));
 
     if ($result !== FALSE) {
       $allGroups = array();
