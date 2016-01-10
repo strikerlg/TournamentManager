@@ -95,13 +95,20 @@ class TManager
         $this->renderTemplate("live.html", array_merge($commonArgs, array("liveData" => $liveData)));
         break;
       case "admin":
-        $this->renderTemplate("admin.html", array_merge($commonArgs, array()));
-        break;
+        $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => false)));
+            break;
       case "login":
         $result = $this->adminLogin();
         if ($result === false)
         {
-          $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => true)));
+          if (!isset($_POST["username"]) || !isset($_POST["password"]))
+          {
+            $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => false)));
+          }
+          else
+          {
+            $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => true)));
+          }
         }
         else
         {
