@@ -15,7 +15,7 @@ class LiveController {
   }
 
   public function getData() {
-    $tournaments = $this->dbRepo->getAllTournaments();
+    $tournaments = $this->dbRepo->getLiveTournaments();
     $data = array();
 
     foreach ($tournaments as $t) {

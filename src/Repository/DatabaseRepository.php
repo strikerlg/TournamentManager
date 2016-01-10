@@ -439,6 +439,31 @@ class DatabaseRepository {
   }
 
   /**
+   * Gibt alle Turniere in der zurück, welche als live markiert sind
+   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Turniere beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getLiveTournaments() {
+    $result = $this->db->query("select * from Tournament where IsLive = 1");
+
+    if ($result !== false) {
+      $allTournaments = array();
+
+      foreach ($result as $r) {
+        $tournament = new Tournament();
+        $tournament->id = $r["Id"];
+        $tournament->name = $r["Name"];
+        $tournament->isLive =$r["IsLive"];
+        array_push($allTournaments, $tournament);
+      }
+
+      return $allTournaments;
+    }
+
+    return false;
+  }
+
+  /**
    * Gibt alle Matches in der Datenbank zurï¿½ck
    * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Matches beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
