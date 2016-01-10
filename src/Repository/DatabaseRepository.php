@@ -243,7 +243,7 @@ class DatabaseRepository {
     return $teams;
   }
 
-  public function getAllTeamsFromGroup($groupId) {
+  public function getAllTeamsForGroup($groupId) {
     $queryString = "select Team.Id as 'Id', Team.Name as 'Name', Team.TournamentId as 'TournamentId',
                       Tournament.Name as 'TournamentName'
                       from Team
@@ -280,8 +280,7 @@ class DatabaseRepository {
                                 where matchinfo.GroupId = mydb.group.Id
                                 and matchinfo.TeamFirstId = teamFirst.Id
                                 and matchinfo.TeamSecondId = teamSecond.Id
-                                and matchinfo.GroupId = $groupId;
-                                order by GroupId,Id;");
+                                and matchinfo.GroupId = $groupId;");
 
     if ($result !== false) {
       $allMatches = array();
@@ -366,7 +365,7 @@ class DatabaseRepository {
    * @return array|bool Der Rï¿½ckgabewert ist entweder ein Array welches alle Gruppen beinhaltet,
    *                       oder false bei Auftritt eines Fehlers
    */
-  public function getAllGroupsfromTournament($tournamentId) {
+  public function getAllGroupsForTournament($tournamentId) {
     $queryString = "select Id, Name, TournamentId from mydb.Group where TournamentId = $tournamentId";
 
     $result = $this->db->query($queryString);
@@ -448,6 +447,94 @@ class DatabaseRepository {
                                 and matchinfo.TeamFirstId = teamFirst.Id
                                 and matchinfo.TeamSecondId = teamSecond.Id
                                 order by GroupId,Id;");
+
+    if ($result !== false) {
+      $allMatches = array();
+
+      foreach ($result as $r) {
+        $match = new Match();
+        $match->id = $r["id"];
+        $match->groupId = $r["groupId"];
+        $match->groupName = $r["groupName"];
+        $match->teamFirstId = $r["teamFirstId"];
+        $match->teamFirstName = $r["teamFirstName"];
+        $match->teamFirstPoints = $r["teamFirstPoints"];
+        $match->teamSecondId = $r["teamSecondId"];
+        $match->teamSecondName = $r["teamSecondName"];
+        $match->teamSecondPoints = $r["teamSecondPoints"];
+        $match->matchTime = $r["matchTime"];
+        $match->isRunning = $r["isRunning"];
+        $match->isCompleted = $r["isCompleted"];
+        array_push($allMatches, $match);
+      }
+
+      return $allMatches;
+    }
+
+    return false;
+  }
+
+  /**
+   * Gibt alle aktuell laufenden Matches des Turniers zurück
+   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Matches beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getAllRunningMatchesForTournament($tournamentId) {
+    $result = $this->db->query("select matchinfo.Id as 'id', matchinfo.GroupId as 'groupId', mydb.group.Name as 'groupName',
+                                matchinfo.TeamFirstId as 'teamFirstId', teamFirst.Name as 'teamFirstName', matchinfo.TeamFirstPoints as 'teamFirstPoints',
+                                matchinfo.TeamSecondId as 'teamSecondId', teamSecond.Name as 'teamSecondName', matchinfo.TeamSecondPoints as 'teamSecondPoints',
+                                matchinfo.MatchTime as 'matchTime', matchinfo.IsRunning as 'isRunning', matchinfo.IsCompleted as 'isCompleted'
+                                from matchinfo, mydb.group, team teamFirst, team teamSecond
+                                where matchinfo.GroupId = mydb.group.Id
+                                and matchinfo.TeamFirstId = teamFirst.Id
+                                and matchinfo.TeamSecondId = teamSecond.Id
+                                and matchinfo.IsRunning = 1
+                                and mydb.group.TournamentId = ?
+                                order by GroupId,Id;", array(sqlInt($tournamentId)));
+
+    if ($result !== false) {
+      $allMatches = array();
+
+      foreach ($result as $r) {
+        $match = new Match();
+        $match->id = $r["id"];
+        $match->groupId = $r["groupId"];
+        $match->groupName = $r["groupName"];
+        $match->teamFirstId = $r["teamFirstId"];
+        $match->teamFirstName = $r["teamFirstName"];
+        $match->teamFirstPoints = $r["teamFirstPoints"];
+        $match->teamSecondId = $r["teamSecondId"];
+        $match->teamSecondName = $r["teamSecondName"];
+        $match->teamSecondPoints = $r["teamSecondPoints"];
+        $match->matchTime = $r["matchTime"];
+        $match->isRunning = $r["isRunning"];
+        $match->isCompleted = $r["isCompleted"];
+        array_push($allMatches, $match);
+      }
+
+      return $allMatches;
+    }
+
+    return false;
+  }
+
+  /**
+   * Gibt alle aktuell beendeten Matches des Turniers zurück
+   * @return array|bool Der Rückgabewert ist entweder ein Array welches alle Matches beinhaltet,
+   *                       oder false bei Auftritt eines Fehlers
+   */
+  public function getAllCompletedMatchesForTournament($tournamentId) {
+    $result = $this->db->query("select matchinfo.Id as 'id', matchinfo.GroupId as 'groupId', mydb.group.Name as 'groupName',
+                                matchinfo.TeamFirstId as 'teamFirstId', teamFirst.Name as 'teamFirstName', matchinfo.TeamFirstPoints as 'teamFirstPoints',
+                                matchinfo.TeamSecondId as 'teamSecondId', teamSecond.Name as 'teamSecondName', matchinfo.TeamSecondPoints as 'teamSecondPoints',
+                                matchinfo.MatchTime as 'matchTime', matchinfo.IsRunning as 'isRunning', matchinfo.IsCompleted as 'isCompleted'
+                                from matchinfo, mydb.group, team teamFirst, team teamSecond
+                                where matchinfo.GroupId = mydb.group.Id
+                                and matchinfo.TeamFirstId = teamFirst.Id
+                                and matchinfo.TeamSecondId = teamSecond.Id
+                                and matchinfo.IsCompleted = 1
+                                and mydb.group.TournamentId = ?
+                                order by GroupId,Id;", array(sqlInt($tournamentId)));
 
     if ($result !== false) {
       $allMatches = array();

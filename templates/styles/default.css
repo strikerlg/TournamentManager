@@ -130,6 +130,10 @@ input {
   text-align: center;
 }
 
+.mf-section.mf-active-match > .mf-section-headline {
+  background-color: tomato;
+}
+
 .mf-section-headline img {
   height: 30px;
   width: auto;

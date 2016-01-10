@@ -91,9 +91,8 @@ class TManager
     {
       case "live":
         $this->httpRefresh(15);
-        $uFuckinWotM8 = new LiveController($this->dbRepo);
-        d($uFuckinWotM8->getData(1));
-        $this->renderTemplate("live.html", array_merge($commonArgs, array()));
+        $liveData = (new LiveController($this->dbRepo))->getData();
+        $this->renderTemplate("live.html", array_merge($commonArgs, array("liveData" => $liveData)));
         break;
       case "admin":
         $this->renderTemplate("admin.html", array_merge($commonArgs, array()));
@@ -164,7 +163,7 @@ class TManager
             $this->httpRedirect("/gruppen");
           }
 
-          $teams = $this->dbRepo->getAllTeamsFromGroup($groupId);
+          $teams = $this->dbRepo->getAllTeamsForGroup($groupId);
 
           for($i = 0; $i < count($teams); $i++)
           {

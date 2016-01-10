@@ -7,75 +7,72 @@ require_once "Model/Tournament.php";
 require_once "Repository/Database.php";
 require_once "Repository/DatabaseRepository.php";
 
-class LiveController
-{
-    private $dbRepo;
+class LiveController {
+  private $dbRepo;
 
-    public function __construct(DatabaseRepository $dbRepo)
-    {
-        $this->dbRepo = $dbRepo;
+  public function __construct(DatabaseRepository $dbRepo) {
+    $this->dbRepo = $dbRepo;
+  }
+
+  public function getData() {
+    $tournaments = $this->dbRepo->getAllTournaments();
+    $data = array();
+
+    foreach ($tournaments as $t) {
+      //$data[$t->name] = $this->getTournamentData($t->id);
+      $data[$t->name] = array("running" => $this->dbRepo->getAllRunningMatchesForTournament($t->id),
+        "completed" => $this->dbRepo->getAllCompletedMatchesForTournament($t->id));
     }
 
-    public function getData($activeTournamentId)
-    {
-        $groups = $this->dbRepo->getAllGroupsfromTournament($activeTournamentId);
-        $currentMatch = new Match();
-        $nextmatch = new Match();
-        foreach($groups as $group)
-        {
-            $group->teams = $this->dbRepo->getAllTeamsFromGroup($group->id);
+    return $data;
+  }
 
-            foreach($group->teams as $team)
-            {
-                $team->matchPoints = $this->calcMatchPointsOfTeam($group->id, $team->id);
-            }
-        }
+  private function getTournamentData($activeTournamentId) {
+    $groups = $this->dbRepo->getAllGroupsForTournament($activeTournamentId);
+    $currentMatch = new Match();
+    $nextmatch = new Match();
 
-        $arrToReturn = array('TeamMatchPoints' => $groups, 'currentMatch' => $currentMatch, 'nextmatch' => $nextmatch);
+    foreach ($groups as $group) {
+      $group->teams = $this->dbRepo->getAllTeamsForGroup($group->id);
 
-        json_encode($arrToReturn);
+      foreach ($group->teams as $team) {
+        $team->matchPoints = $this->calcMatchPointsOfTeam($group->id, $team->id);
+      }
     }
 
-    private function calcMatchPointsOfTeam($groupId, $teamId)
-    {
-        $teamAllMatchPoints = 0;
-        $matches = $this->dbRepo->getMatchesFromGroup($groupId);
+    $arrToReturn = array('TeamMatchPoints' => $groups);
+    return $arrToReturn;
+  }
 
-        foreach ($matches as $i => $match)
-        {
-            if($match->teamFirstId !== $teamId && $match->teamSecondId !== $teamId)
-            {
-                unset($match[$i]);
-            }
-        }
+  private function calcMatchPointsOfTeam($groupId, $teamId) {
+    $teamAllMatchPoints = 0;
+    $matches = $this->dbRepo->getMatchesFromGroup($groupId);
 
-        foreach ($matches as $match)
-        {
-            $searchedTeamPoints = 0;
-            $otherTeamPoints = 0;
-
-            if($match->teamFirstId === $teamId)
-            {
-                $searchedTeamPoints = $match->teamFirstPoints;
-                $otherTeamPoints = $match->teamSecondPoints;
-            }
-            else
-            {
-                $searchedTeamPoints = $match->teamSecondPoints;
-                $otherTeamPoints = $match->teamFirstPoints;
-            }
-
-            if($searchedTeamPoints > $otherTeamPoints)
-            {
-                $teamAllMatchPoints = $teamAllMatchPoints + 2;
-            }
-            else if($searchedTeamPoints === $otherTeamPoints)
-            {
-                $teamAllMatchPoints = $teamAllMatchPoints + 1;
-            }
-        }
-
-        return $teamAllMatchPoints;
-
+    foreach ($matches as $i => $match) {
+      if ($match->teamFirstId !== $teamId && $match->teamSecondId !== $teamId) {
+        unset($match[$i]);
+      }
     }
+
+    foreach ($matches as $match) {
+      $searchedTeamPoints = 0;
+      $otherTeamPoints = 0;
+
+      if ($match->teamFirstId === $teamId) {
+        $searchedTeamPoints = $match->teamFirstPoints;
+        $otherTeamPoints = $match->teamSecondPoints;
+      } else {
+        $searchedTeamPoints = $match->teamSecondPoints;
+        $otherTeamPoints = $match->teamFirstPoints;
+      }
+
+      if ($searchedTeamPoints > $otherTeamPoints) {
+        $teamAllMatchPoints = $teamAllMatchPoints + 2;
+      } else if ($searchedTeamPoints === $otherTeamPoints) {
+        $teamAllMatchPoints = $teamAllMatchPoints + 1;
+      }
+    }
+
+    return $teamAllMatchPoints;
+  }
 }
