@@ -40,7 +40,7 @@
         console.log(data);
 
         if (insertFinished && updateFinished) {
-          location.reload();
+         location.reload();
         }
       });
     });
@@ -92,6 +92,7 @@
     $allForms.each(function() {
       var $form = $(this);
       var formData = $form.serializeArray();
+      formData.push.apply(formData, uncheckedCheckboxes($form));
       allForms.push(formData);
     });
 
@@ -119,5 +120,14 @@
 
   function allUpdateForms($formContainer) {
     return $($formContainer.find(".mf-form").not(".new").not(".hidden"));
+  }
+
+  window.uncheckedCheckboxes = function($form) {
+    return $form.find("input[type=checkbox]:not(:checked)").map(function() {
+      return {
+        name: this.name,
+        value: "0"
+      };
+    });
   }
 })(jQuery);

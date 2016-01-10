@@ -99,11 +99,9 @@ isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
       <td><input name="teamFirstPoints" type="text" value="{{ teamFirstPoints }}"></td>
       <td><input name="teamSecondPoints" type="text" value="{{ teamSecondPoints }}"></td>
       <td>
-        <input name="isRunning" type="hidden" value="0">
         <input name="isRunning" type="checkbox" value="1" {% if isRunning %} checked {% endif %}>
       </td>
       <td>
-        <input name="isCompleted" type="hidden" value="0">
         <input name="isCompleted" type="checkbox" value="1" {% if isCompleted %} checked {% endif %}>
       </td>
 
