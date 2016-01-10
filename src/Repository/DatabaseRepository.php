@@ -115,7 +115,7 @@ class DatabaseRepository {
   public function addMatch(Match $match)
   {
     $result = $this->db->query("insert into matchinfo(GroupId, TeamFirstId, TeamSecondId, TeamFirstPoints, TeamSecondPoints, MatchTime, IsRunning, IsCompleted) values(?,?,?,?,?,?,?,?)",
-                              array(sqlInt($match->groupId)), sqlInt($match->teamFirstId), sqlInt($match->teamSecondId), sqlInt($match->teamFirstPoints), sqlInt($match->teamSecondPoints), sqlString($match->matchTime), sqlInt($match->isRunning), sqlInt($match->isCompleted));
+                              array(sqlInt($match->groupId), sqlInt($match->teamFirstId), sqlInt($match->teamSecondId), sqlInt($match->teamFirstPoints), sqlInt($match->teamSecondPoints), sqlString($match->matchTime), sqlInt($match->isRunning), sqlInt($match->isCompleted)));
 
     return $result;
   }

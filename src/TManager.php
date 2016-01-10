@@ -170,8 +170,8 @@ class TManager
             for($j = $i + 1; $j < count($teams); $j++)
             {
               $matchNew = new Match();
-              $matchNew->teamFirstId = $teams[$i];
-              $matchNew->teamSecondId = $teams[$j];
+              $matchNew->teamFirstId = $teams[$i]->id;
+              $matchNew->teamSecondId = $teams[$j]->id;
               $matchNew->teamFirstPoints = 0;
               $matchNew->teamSecondPoints = 0;
               $matchNew->isRunning = 0;
