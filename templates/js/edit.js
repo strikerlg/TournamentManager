@@ -122,7 +122,7 @@
     return $($formContainer.find(".mf-form").not(".new").not(".hidden"));
   }
 
-  window.uncheckedCheckboxes = function($form) {
+  function uncheckedCheckboxes($form) {
     return $form.find("input[type=checkbox]:not(:checked)").map(function() {
       return {
         name: this.name,
