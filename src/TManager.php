@@ -151,6 +151,20 @@ class TManager
             array("group" => $group, "teams" => $mappings, "allTeams" => $allTeams)));
         }
         break;
+      case "matchmaker":
+        if ($this->ensureLoggedIn()) {
+          $groupId = null;
+          if (isset($_GET["GroupId"]) && is_numeric($_GET["GroupId"])) {
+            $groupId = intval($_GET["GroupId"]);
+          }
+          if ($groupId === null) {
+            $this->httpRedirect("/gruppen");
+          }
+
+          echo "Jetzt sollte ich die Matches der Gruppe $groupId berechnen, oder so.";
+          //$this->httpRedirect("/gruppen");
+        }
+        break;
       default:
         $this->renderTemplate("404.html", array_merge($commonArgs, array("requestedPage" => '"' . $pageName . '"')));
     }
@@ -166,6 +180,19 @@ class TManager
     {
       $this->handlePage("login");
     }
+  }
+
+  /**
+   * Zeigt das Login-Formular an, wenn der Benutzer nicht als Admin eingeloggt ist
+   * @return bool Gibt an ob der Benutzer eingeloggt ist
+   */
+  private function ensureLoggedIn() {
+    if ($this->loggedInAdmin() === false) {
+      $this->handlePage("login");
+      return false;
+    }
+
+    return true;
   }
 
   /**
