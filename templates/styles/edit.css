@@ -26,6 +26,10 @@
 
 @media (max-width: 1200px) {
   .mf-mobile-scrollx {
+    overflow-x: scroll;
+  }
+
+  .mf-mobile-scrollxy {
     overflow: scroll;
   }
 
