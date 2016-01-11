@@ -62,7 +62,8 @@ isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
   {% endif %}
 
 
-  <table class="mf-table">
+  <div class="table-responsive">
+    <table class="mf-table">
     <tr>
       <th><label>{% if not groupId %}Gruppe{% endif %}</label></th>
       <th><label>Spielzeit</label></th>
@@ -122,6 +123,7 @@ isCompleted, teamFirstId, teamSecondId, gruppen, teams, hidden = false) %}
       <td><input class="delete-record form-control" type="button" value="Löschen"/></td>
     </tr>
   </table>
+    </div>
 </form>
 {% endmacro %}
 
