@@ -70,55 +70,6 @@
         </div>
     </div>
 
-    <div class="mf-section-separator">{{ tournamentName }} Matches</div>
-
-      {% for match in tournament.running %}
-      <div class="mf-section mf-active-match">
-        <div class="mf-section-headline">
-          <div class="mf-section-headline-inner mf-container">
-            <img src="{{ asset('img/fussball.gif') }}"> Läuft - {{ match.groupName }}
-          </div>
-        </div>
-
-        <div class="mf-section-inner mf-container">
-          <div class="hidden-sm hidden-xs clearfix">
-            <div class="col-md-3">{{ match.matchTime }}</div>
-            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
-          </div>
-          <div class="visible-sm visible-xs clearfix">
-            <div class="col-xs-6">{{ match.teamFirstName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-xs-6">{{ match.teamSecondName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-
-      {% for match in tournament.completed %}
-      <div class="mf-section">
-        <div class="mf-section-headline">
-          <div class="mf-section-headline-inner mf-container">
-            Abgeschlossen - {{ match.groupName }}
-          </div>
-        </div>
-
-        <div class="mf-section-inner mf-container">
-          <div class="hidden-sm hidden-xs clearfix">
-            <div class="col-md-3">{{ match.matchTime }}</div>
-            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
-          </div>
-          <div class="visible-sm visible-xs clearfix">
-            <div class="col-xs-6">{{ match.teamFirstName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-xs-6">{{ match.teamSecondName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
     {% endfor %}
 
   </div>

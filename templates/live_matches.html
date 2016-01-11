@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+  <title>Tournament Manager</title>
+  <link rel="stylesheet" type="text/css" href="{{ asset('lib/bootstrap-3.3.5-dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('styles/default.css') }}">
+</head>
+<body>
+{% include "partials/mobile_nav.html" %}
+
+<div class="mf-page-wrap">
+  <div class="mf-page mf-container">
+    {% include "partials/page_header.html" %}
+
+    {% for tournamentName, tournament in liveData %}
+
+    <div class="mf-section-separator">{{ tournamentName }} Matches</div>
+
+      {% for match in tournament.running %}
+      <div class="mf-section mf-active-match">
+        <div class="mf-section-headline">
+          <div class="mf-section-headline-inner mf-container">
+            <img src="{{ asset('img/fussball.gif') }}"> Läuft - {{ match.groupName }}
+          </div>
+        </div>
+
+        <div class="mf-section-inner mf-container">
+          <div class="hidden-sm hidden-xs clearfix">
+            <div class="col-md-3">{{ match.matchTime }}</div>
+            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
+          </div>
+          <div class="visible-sm visible-xs clearfix">
+            <div class="col-xs-6">{{ match.teamFirstName }}</div>
+            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-xs-6">{{ match.teamSecondName }}</div>
+            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for match in tournament.completed %}
+      <div class="mf-section">
+        <div class="mf-section-headline">
+          <div class="mf-section-headline-inner mf-container">
+            Abgeschlossen - {{ match.groupName }}
+          </div>
+        </div>
+
+        <div class="mf-section-inner mf-container">
+          <div class="hidden-sm hidden-xs clearfix">
+            <div class="col-md-3">{{ match.matchTime }}</div>
+            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
+          </div>
+          <div class="visible-sm visible-xs clearfix">
+            <div class="col-xs-6">{{ match.teamFirstName }}</div>
+            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-xs-6">{{ match.teamSecondName }}</div>
+            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ asset('lib/jquery-1.11.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+</body>
+</html>

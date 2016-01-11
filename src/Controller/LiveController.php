@@ -64,7 +64,7 @@ class LiveController {
       }
 
       if ($searchedTeamPoints > $otherTeamPoints) {
-        $teamAllMatchPoints = $teamAllMatchPoints + 2;
+        $teamAllMatchPoints = $teamAllMatchPoints + 3;
       } else if ($searchedTeamPoints === $otherTeamPoints) {
         $teamAllMatchPoints = $teamAllMatchPoints + 1;
       }

@@ -89,10 +89,15 @@ class TManager
 
     switch (strtolower($pageName))
     {
-      case "live":
+      case "live-matches":
         $this->httpRefresh(15);
         $liveData = (new LiveController($this->dbRepo))->getData();
-        $this->renderTemplate("live.html", array_merge($commonArgs, array("liveData" => $liveData)));
+        $this->renderTemplate("live_matches.html", array_merge($commonArgs, array("liveData" => $liveData)));
+        break;
+      case "live-punktestand":
+        $this->httpRefresh(15);
+        $liveData = (new LiveController($this->dbRepo))->getData();
+        $this->renderTemplate("live_punktestand.html", array_merge($commonArgs, array("liveData" => $liveData)));
         break;
       case "admin":
         $this->renderTemplate("admin.html", array_merge($commonArgs, array("incorrectLogin" => false)));
