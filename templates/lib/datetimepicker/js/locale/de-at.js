@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : austrian german (de-at)
 //! author : lluchs : https://github.com/lluchs
-//! author: Menelion Elensúle: https://github.com/Oire
+//! author: Menelion Elensï¿½le: https://github.com/Oire
 //! author : Martin Groller : https://github.com/MadMG
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
@@ -28,8 +28,8 @@
   }
 
   var de_at = moment.defineLocale('de-at', {
-    months : 'Jänner_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
-    monthsShort : 'Jän._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
+    months : 'JÃ¤nner_Februar_Mï¿½rz_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
+    monthsShort : 'JÃ¤n._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
     weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
     weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
     weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
