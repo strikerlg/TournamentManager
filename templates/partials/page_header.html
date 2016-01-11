@@ -7,9 +7,9 @@
     <a class="mf-item-active" href="/live-matches" class="mf-menu-item">Matches</a>
     <a class="mf-item-active" href="/live-punktestand" class="mf-menu-item">Punktestand</a>
     {% if adminLoggedIn == true %}
-    <a href="/logout" class="mf-menu-item">Abmelden</a>
+    <a href="/logout" class="mf-menu-item"><span class="glyphicon glyphicon-log-out"></span></a>
     {% else %}
-    <a href="/admin" class="mf-menu-item">Admin</a>
+    <a href="/admin" class="mf-menu-item"><span class="glyphicon glyphicon-log-in"></span></a>
     {% endif %}
   </div>
   <div class="mf-menu mf-menu-right pull-right">
