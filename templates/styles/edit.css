@@ -28,6 +28,10 @@
   overflow: scroll;
 }
 
+.bootstrap-datetimepicker-widget {
+  color: #333;
+}
+
 @media (max-width: 1200px) {
   .mf-mobile-scrollx {
     overflow-x: scroll;

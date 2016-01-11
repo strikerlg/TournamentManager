@@ -6,13 +6,16 @@
 
     if ($.fn.datetimepicker) {
       $(".mf-date").each(function() {
+        $(this).parents("form").css("position", "relative");
+
         $(this).datetimepicker({
           locale: "de-at",
           format: "YYYY-MM-DD HH:mm:ss",
-          widgetPositioning: {
+          /*widgetPositioning: {
             horizontal: "right",
             vertical: "bottom"
-          }
+          },*/
+          widgetParent: $(this).parents("form")
         });
       });
     }
