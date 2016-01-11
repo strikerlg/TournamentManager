@@ -25,7 +25,7 @@
       </div>
 
       <div class="mf-section-inner">
-        <div class="mf-mobile-container mf-mobile-scrollx">
+        <div class="mf-mobile-container mf-mobile-scrollx mf-mobile-scrollx-noscroll">
           <div class="row mf-mobile-scrollx-inner">
             <div class="col-xs-2"><label>Name</label></div>
             <div class="col-xs-2"><label>Turnier</label></div>
@@ -55,7 +55,7 @@
 </div>
 
 {% macro record(id, name, tournamentId, turniere, hidden = false) %}
-<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php">
+<form class="mf-form {% if hidden %} hidden {% endif %}" id="record-template" method="POST" action="/index.php" style="position: relative;">
   {% if id is not null %}
   <input class="field-id" type="hidden" name="Id" value="{{ id }}">
   {% endif %}
@@ -77,6 +77,7 @@
       </div>
     </div>
   </div>
+  <div class="mf-mobile-container mf-indicate-scrollable"></div>
 </form>
 {% endmacro %}
 
