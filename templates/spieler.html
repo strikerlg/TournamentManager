@@ -27,10 +27,10 @@
       <div class="mf-section-inner mf-container">
         <div class="row">
           <div class="mf-mobile-container">
-            <div class="col-xs-3"><label>Vorname</label></div>
-            <div class="col-xs-3"><label>Nachname</label></div>
-            <div class="col-xs-3"><label>Team</label></div>
-            <div class="col-xs-3"><label></label></div>
+            <div class="col-xs-4 col-md-3"><label>Vorname</label></div>
+            <div class="col-xs-4 col-md-3"><label>Nachname</label></div>
+            <div class="col-xs-4 col-md-3"><label>Team</label></div>
+            <div class="col-xs-4 col-md-3"><label></label></div>
           </div>
         </div>
 
@@ -67,16 +67,16 @@
 
   <div class="mf-mobile-container">
     <div class="row">
-      <div class="col-xs-3"><input class="form-control" name="Vorname" type="text" value="{{ firstname }}"></div>
-      <div class="col-xs-3"><input class="form-control" name="Name" type="text" value="{{ lastname }}"></div>
-      <div class="col-xs-3">
+      <div class="col-xs-4 col-md-3"><input class="form-control" name="Vorname" type="text" value="{{ firstname }}"></div>
+      <div class="col-xs-4 col-md-3"><input class="form-control" name="Name" type="text" value="{{ lastname }}"></div>
+      <div class="col-xs-4 col-md-3">
         <select class="form-control" name="TeamId">
           {% for team in teams %}
           <option value="{{ team.id }}" {{ team.id == teamId ? "selected" : "" }}>{{ team.name }}</option>
           {% endfor %}
         </select>
       </div>
-      <div class="col-xs-3"><input class="delete-record form-control" type="button" value="Löschen"/></div>
+      <div class="col-xs-4  col-md-3"><input class="delete-record form-control" type="button" value="Löschen"/></div>
     </div>
   </div>
 </form>

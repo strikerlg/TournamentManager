@@ -2,12 +2,6 @@
 
 class Database
 {
-  // Constants
-  const DATABASE_IP = "localhost";
-  const DATABASE_USERNAME = "root";
-  const DATABASE_PASSWORD = "megaforge";
-  const DATABASE_DB = "mydb";
-
   // Members
   private $mConnection = null;
   private $mIsConnected = false;
@@ -23,13 +17,12 @@ class Database
    * Stellt Verbindung zur Datenbank her.
    * @return boolean true falls erfolgreich verbunden, ansonnsten false.
    */
-  public function connect()
+  public function connect($dbIp, $dbUsername, $dbPassword, $dbDb)
   {
     if($this->isConnected())
       $this->close();
 
-    $this->mConnection = new \mysqli($this::DATABASE_IP, $this::DATABASE_USERNAME,
-      $this::DATABASE_PASSWORD, $this::DATABASE_DB);
+    $this->mConnection = new \mysqli($dbIp, $dbUsername, $dbPassword, $dbDb);
 
     if($this->mConnection->connect_errno != 0)
     {

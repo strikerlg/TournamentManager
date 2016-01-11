@@ -13,19 +13,43 @@ class TManager
   private $twig;
   private $db;
   private $dbRepo;
+  private $config;
 
   public function __construct()
   {
+    session_start();
+
+    $this->parseConfig();
     $this->twig = $this->initTwig();
     $this->db = $this->initDatabase();
     $this->dbRepo = new DatabaseRepository($this->db);
-
-    session_start();
   }
 
   public function __destruct()
   {
-    $this->db->close();
+    if ($this->db) {
+      $this->db->close();
+    }
+  }
+
+  private function parseConfig() {
+    $confFilePath = "conf.ini";
+
+    if (file_exists($confFilePath)) {
+      $this->config = parse_ini_file($confFilePath, true);
+      if ($this->config === false) {
+        $errmsg = "Beim Parsen der Konfigurationsdatei ($confFilePath) ist ein Fehler aufgetreten.<br>
+                   Überprüfen Sie ob die Datei existiert und ob alle zwingenden Einstellungen angeführt sind.";
+        echo "<span style='color: red; font-weight: bold;'>$errmsg</span>";
+        exit(0);
+      }
+    }
+    else {
+      $errmsg = "Die Konfigurationsdatei ($confFilePath) wurde nicht gefunden.<br>
+                   Überprüfen Sie ob die Datei existiert.";
+      echo "<span style='color: red; font-weight: bold;'>$errmsg</span>";
+      exit(0);
+    }
   }
 
   /**
@@ -60,7 +84,8 @@ class TManager
   private function initDatabase()
   {
     $db = $GLOBALS["DB"] = new Database();
-    $db->connect();
+    $db->connect($this->config["database"]["ip"], $this->config["database"]["username"],
+      $this->config["database"]["password"], $this->config["database"]["database"]);
     return $db;
   }
 
