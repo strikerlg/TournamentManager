@@ -24,6 +24,6 @@ if (isset($_POST["action"]))
 }
 else
 {
-  $page = isset($_GET["page"]) ? $_GET["page"] : "live";
+  $page = isset($_GET["page"]) ? $_GET["page"] : "live-punktestand";
   $tManager->handlePage($page);
 }
