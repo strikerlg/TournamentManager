@@ -23,3 +23,13 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+@media (max-width: 1200px) {
+  .mf-mobile-scrollx {
+    overflow: scroll;
+  }
+
+  .mf-mobile-scrollx-inner {
+    width: 1280px;
+  }
+}
