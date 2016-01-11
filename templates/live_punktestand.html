@@ -14,62 +14,64 @@
   <div class="mf-page mf-container">
     {% include "partials/page_header.html" %}
 
-    {% for tournamentName, tournament in liveData %}
-
     <div class="mf-section-separator">Punktetabelle</div>
-    <div class="mf-section">
-      <div class="mf-section-headline">
-        <div class="mf-section-headline-inner mf-container">
-          &nbsp;
+
+    {% for tournamentName, tournament in liveData %}
+      {% for group in tournament.TournamentMatchPoints %}
+
+      <div class="mf-section">
+        <div class="mf-section-headline">
+          <div class="mf-section-headline-inner mf-container">
+            {{ group.name }}
+          </div>
         </div>
-      </div>
+          <div class="mf-section-inner mf-container">
+            <div class="hidden-sm hidden-xs clearfix">
+              <div class ="col-md-13">
+                <table class="table" >
+                  <tr>
+                    <th>Team</th>
+                    <th>Punkte</th>
+                    <th>Tore geschossen</th>
+                    <th>Tore bekommen</th>
+                  </tr>
+                  {% for team in group.teams %}
+                  <tr>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.matchPoints }}</td>
+                    <td>{{ team.wonPoints }}</td>
+                    <td>{{ team.lostPoints }}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                </div>
+              </div>
+            <div class="visible-sm visible-xs clearfix">
+              <div class ="col-xs-10">
+                <table class="table" >
+                  <tr>
+                    <th>Team</th>
+                    <th>Punkte</th>
+                    <th>Tore geschossen</th>
+                    <th>Tore bekommen</th>
+                  </tr>
 
-      <div class="mf-section-inner mf-container">
-        <div class="hidden-sm hidden-xs clearfix">
-          <div class ="col-md-8">
-            <table class="table" >
-              <tr>
-                <th>Gruppe</th>
-                <th>Team</th>
-                <th>Punkte</th>
-              </tr>
-
-              {% for group in tournament.TournamentMatchPoints %}
-              {% for team in group.teams %}
-              <tr>
-                <td>{{ team.groupName }}</td>
-                <td>{{ team.name }}</td>
-                <td>{{ team.matchPoints }}</td>
-              </tr>
-              {% endfor %}
-              {% endfor %}
-            </table>
+                  {% for team in group.teams %}
+                  <tr>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.matchPoints }}</td>
+                    <td>{{ team.wonPoints }}</td>
+                    <td>{{ team.lostPoints }}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
             </div>
           </div>
-        <div class="visible-sm visible-xs clearfix">
-          <div class ="col-xs-10">
-            <table class="table" >
-              <tr>
-                <th>Gruppe</th>
-                <th>Team</th>
-                <th>Punkte</th>
-              </tr>
-
-              {% for group in tournament.TournamentMatchPoints %}
-              {% for team in group.teams %}
-              <tr>
-                <td>{{ team.groupName }}</td>
-                <td>{{ team.name }}</td>
-                <td>{{ team.matchPoints }}</td>
-              </tr>
-              {% endfor %}
-              {% endfor %}
-            </table>
-          </div>
         </div>
-        </div>
-    </div>
+      <br>
 
+    {% endfor %}
     {% endfor %}
 
   </div>

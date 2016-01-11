@@ -33,7 +33,10 @@ class LiveController {
       $group->teams = $this->dbRepo->getAllTeamsForGroup($group->id);
 
       foreach ($group->teams as $team) {
-        $team->matchPoints = $this->calcMatchPointsOfTeam($group->id, $team->id);
+        $temp = $this->calcMatchPointsOfTeam($group->id, $team->id);
+        $team->matchPoints = $temp["teamAllMatchPoints"];
+        $team->wonPoints = $temp["teamWonPoints"];
+        $team->lostPoints = $temp["teamLostPoints"];
         $team->groupName = $group->name;
       }
     }
@@ -43,6 +46,8 @@ class LiveController {
 
   private function calcMatchPointsOfTeam($groupId, $teamId) {
     $teamAllMatchPoints = 0;
+    $teamAllWonPoints = 0;
+    $teamAllLostPoints = 0;
     $matches = $this->dbRepo->getMatchesFromGroup($groupId);
 
     foreach ($matches as $i => $match) {
@@ -52,24 +57,31 @@ class LiveController {
     }
 
     foreach ($matches as $match) {
-      $searchedTeamPoints = 0;
-      $otherTeamPoints = 0;
+      if ($match->isCompleted === 1) {
+        $searchedTeam = 0;
+        $otherTeamPoints = 0;
 
-      if ($match->teamFirstId === $teamId) {
-        $searchedTeamPoints = $match->teamFirstPoints;
-        $otherTeamPoints = $match->teamSecondPoints;
-      } else {
-        $searchedTeamPoints = $match->teamSecondPoints;
-        $otherTeamPoints = $match->teamFirstPoints;
-      }
+        if ($match->teamFirstId === $teamId) {
+          $searchedTeamPoints = $match->teamFirstPoints;
+          $otherTeamPoints = $match->teamSecondPoints;
+        } else {
+          $searchedTeamPoints = $match->teamSecondPoints;
+          $otherTeamPoints = $match->teamFirstPoints;
+        }
 
-      if ($searchedTeamPoints > $otherTeamPoints) {
-        $teamAllMatchPoints = $teamAllMatchPoints + 3;
-      } else if ($searchedTeamPoints === $otherTeamPoints) {
-        $teamAllMatchPoints = $teamAllMatchPoints + 1;
+        $teamAllWonPoints = $teamAllWonPoints + $searchedTeamPoints;
+        $teamAllLostPoints = $teamAllLostPoints + $otherTeamPoints;
+
+        if ($searchedTeamPoints > $otherTeamPoints) {
+          $teamAllMatchPoints = $teamAllMatchPoints + 3;
+        } else if ($searchedTeamPoints === $otherTeamPoints) {
+          $teamAllMatchPoints = $teamAllMatchPoints + 1;
+        }
       }
     }
 
-    return $teamAllMatchPoints;
+    $arrayToReturn = array("teamAllMatchPoints" => $teamAllMatchPoints, "teamWonPoints" => $teamAllWonPoints, "teamLostPoints" => $teamAllLostPoints);
+
+    return $arrayToReturn;
   }
 }

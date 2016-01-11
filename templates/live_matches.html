@@ -29,20 +29,24 @@
         <div class="mf-section-inner mf-container">
           <div class="hidden-sm hidden-xs clearfix">
             <div class="col-md-3">{{ match.matchTime }}</div>
-            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
+            <div class="col-md-3">{{ match.teamFirstName }}<br>Tore: {{ match.teamFirstPoints }}</div>
+            <div class="col-md-5">{{ match.teamSecondName }}<br>Tore: {{ match.teamSecondPoints }}</div>
           </div>
           <div class="visible-sm visible-xs clearfix">
             <div class="col-xs-6">{{ match.teamFirstName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-xs-6">Tore: {{ match.teamFirstPoints }}</div>
             <div class="col-xs-6">{{ match.teamSecondName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
+            <div class="col-xs-6">Tore: {{ match.teamSecondPoints }}</div>
           </div>
         </div>
       </div>
       {% endfor %}
-
+    <div class="mf-section-separator">&nbsp;</div>
+    {% set temp = null %}
       {% for match in tournament.completed %}
+        {% if match.groupId != temp and temp != null %}
+    <div class="mf-section-separator">&nbsp;</div>
+        {% endif %}
       <div class="mf-section">
         <div class="mf-section-headline">
           <div class="mf-section-headline-inner mf-container">
@@ -53,17 +57,18 @@
         <div class="mf-section-inner mf-container">
           <div class="hidden-sm hidden-xs clearfix">
             <div class="col-md-3">{{ match.matchTime }}</div>
-            <div class="col-md-3">{{ match.teamFirstName }}<br>Punkte: {{ match.teamFirstPoints }}</div>
-            <div class="col-md-5">{{ match.teamSecondName }}<br>Punkte: {{ match.teamSecondPoints }}</div>
+            <div class="col-md-3">{{ match.teamFirstName }}<br>Tore: {{ match.teamFirstPoints }}</div>
+            <div class="col-md-5">{{ match.teamSecondName }}<br>Tore: {{ match.teamSecondPoints }}</div>
           </div>
           <div class="visible-sm visible-xs clearfix">
             <div class="col-xs-6">{{ match.teamFirstName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamFirstPoints }}</div>
+            <div class="col-xs-6">Tore: {{ match.teamFirstPoints }}</div>
             <div class="col-xs-6">{{ match.teamSecondName }}</div>
-            <div class="col-xs-6">Punkte: {{ match.teamSecondPoints }}</div>
+            <div class="col-xs-6">v: {{ match.teamSecondPoints }}</div>
           </div>
         </div>
       </div>
+      {% set temp = match.groupId %}
       {% endfor %}
     {% endfor %}
   </div>
