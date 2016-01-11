@@ -142,12 +142,12 @@ class TManager
         }
         else
         {
-          $this->handlePage("live");
+          $this->handlePage("live-punktestand");
         }
         break;
       case "logout":
         $this->adminLogout();
-        $this->handlePage("live");
+        $this->handlePage("live-punktestand");
         break;
       case "gruppen":
         $groups = $this->dbRepo->getAllGroups();
