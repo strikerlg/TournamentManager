@@ -8,7 +8,11 @@
       $(".mf-date").each(function() {
         $(this).datetimepicker({
           locale: "de-at",
-          format: "YYYY-MM-DD HH:mm:ss"
+          format: "YYYY-MM-DD HH:mm:ss",
+          widgetPositioning: {
+            horizontal: "right",
+            vertical: "bottom"
+          }
         });
       });
     }
