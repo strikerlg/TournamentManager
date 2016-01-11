@@ -39,6 +39,9 @@ class LiveController {
         $team->lostPoints = $temp["teamLostPoints"];
         $team->groupName = $group->name;
       }
+
+      usort($group->teams, "cmp");
+
     }
 
     return $groups;
@@ -84,4 +87,12 @@ class LiveController {
 
     return $arrayToReturn;
   }
+}
+
+function cmp($a, $b)
+{
+  if ($a->matchPoints == $b->matchPoints) {
+    return 0;
+  }
+  return ($a->matchPoints > $b->matchPoints) ? -1 : 1;
 }
