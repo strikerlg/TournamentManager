@@ -1,8 +1,14 @@
 /*===--------------- General styling ---------------===*/
 
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+ }
+
 body {
   font-size: 22px;
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body * {

@@ -90,7 +90,7 @@ class TManager
     switch (strtolower($pageName))
     {
       case "live-matches":
-        $this->httpRefresh(15);
+        //$this->httpRefresh(15);
         $liveData = (new LiveController($this->dbRepo))->getData();
         $this->renderTemplate("live_matches.html", array_merge($commonArgs, array("liveData" => $liveData)));
         break;
