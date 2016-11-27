@@ -1,8 +1,0 @@
-*.iml
-.idea
-/nbproject/private/
-project.properties
-project.xml
-*~
-.DS_Store
-cache/
